@@ -1,0 +1,66 @@
+{{define "content"}}
+<div class="fade-in space-y-5">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div><h2 class="text-2xl font-bold text-white"><i class="fas fa-film text-blue-400 mr-2"></i>{{if .Data.IsNew}}Upload Content{{else}}Edit Content{{end}}</h2><p class="text-sm text-gray-400 mt-1">Manage title information, artwork and classification.</p></div>
+    <a href="/admin/movies/new" class="text-sm text-blue-300 hover:text-blue-200">+ New content</a>
+  </div>
+  {{if .Data.Error}}<div class="rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200" role="alert">{{.Data.Error}}</div>{{end}}
+  <form method="post" action="{{if .Data.IsNew}}/admin/movies/new{{else}}/admin/movies/{{.Data.Movie.ID}}/edit{{end}}" class="space-y-5" data-movie-form>
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <input type="hidden" name="release_ts" value="{{if .Data.Movie.ReleaseTS}}{{.Data.Movie.ReleaseTS}}{{end}}" data-release-ts>
+    <section class="bg-gray-800 rounded-2xl border border-gray-700 p-5 sm:p-7 space-y-5">
+      <div><h3 class="text-lg font-bold text-white">Basic information</h3><p class="text-xs text-gray-400">Choose whether this entry is a movie or a series.</p></div>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="rounded-xl border border-gray-600 bg-gray-900/60 p-3 flex items-center gap-2 text-sm text-white"><input type="radio" name="content_type" value="movie" {{if eq .Data.Movie.ContentType "movie"}}checked{{end}}> Single Movie</label>
+        <label class="rounded-xl border border-gray-600 bg-gray-900/60 p-3 flex items-center gap-2 text-sm text-white"><input type="radio" name="content_type" value="series" {{if eq .Data.Movie.ContentType "series"}}checked{{end}}> TV Series</label>
+      </div>
+      <label class="block text-sm text-gray-300">Content title <input required maxlength="300" name="title" value="{{.Data.Movie.Title}}" placeholder="e.g. Inception, Stranger Things" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-4 py-3 text-white"></label>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <label class="flex items-start gap-3 rounded-xl border border-gray-700 bg-gray-900/50 p-4"><input type="checkbox" name="is_private" class="mt-1" {{if .Data.Movie.IsPrivate}}checked{{end}}><span><b class="block text-sm text-white">Private content</b><span class="text-xs text-gray-400">Hidden from the normal user panel.</span></span></label>
+        <label class="flex items-start gap-3 rounded-xl border border-gray-700 bg-gray-900/50 p-4"><input type="checkbox" name="is_upcoming" class="mt-1" data-upcoming-toggle {{if .Data.Movie.IsUpcoming}}checked{{end}}><span><b class="block text-sm text-white">Upcoming content</b><span class="text-xs text-gray-400">Set a release date and time.</span></span></label>
+      </div>
+      <div class="{{if not .Data.Movie.IsUpcoming}}hidden{{end}} rounded-xl border border-blue-500/30 bg-blue-900/10 p-4" data-release-wrap>
+        <label class="block text-sm text-gray-300">Release date &amp; time <input type="datetime-local" name="release_date" value="{{.Data.Movie.ReleaseDate}}" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-4 py-3 text-white" data-release-date></label>
+        <p class="mt-2 text-xs text-blue-200">The content is treated as upcoming until this time.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <label class="text-sm text-gray-300">Release year <input type="number" min="1850" max="2200" name="year" value="{{if .Data.Movie.Year}}{{.Data.Movie.Year}}{{end}}" placeholder="2026" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white"></label>
+        <label class="text-sm text-gray-300">Rating (0-10) <input type="number" min="0" max="10" step="0.1" name="rating" value="{{if .Data.Movie.Rating}}{{.Data.Movie.Rating}}{{end}}" placeholder="8.5" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white"></label>
+        <label class="text-sm text-gray-300">Content type <select name="type" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white">{{range .Data.Types}}<option value="{{.}}" {{if eq $.Data.Movie.Type .}}selected{{end}}>{{.}}</option>{{end}}</select></label>
+      </div>
+    </section>
+    <section class="bg-gray-800 rounded-2xl border border-gray-700 p-5 sm:p-7 space-y-4">
+      <h3 class="text-lg font-bold text-white">Artwork</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div><label class="block text-sm text-gray-300">Poster image URL <input required type="url" name="poster_url" value="{{.Data.Movie.PosterURL}}" placeholder="https://..." class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white" data-image-url="poster"></label><div class="mt-3 flex h-52 items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-gray-900"><img alt="Poster preview" class="max-h-full max-w-full object-contain {{if not .Data.Movie.PosterURL}}hidden{{end}}" data-image-preview="poster" src="{{.Data.Movie.PosterURL}}"><span class="text-xs text-gray-500" data-image-empty="poster" {{if .Data.Movie.PosterURL}}hidden{{end}}>Poster preview</span></div></div>
+        <div><label class="block text-sm text-gray-300">Cover / backdrop URL <input type="url" name="cover_url" value="{{.Data.Movie.CoverURL}}" placeholder="https://... (optional)" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white" data-image-url="cover"></label><div class="mt-3 flex h-52 items-center justify-center overflow-hidden rounded-xl border border-gray-700 bg-gray-900"><img alt="Cover preview" class="max-h-full max-w-full object-contain {{if not .Data.Movie.CoverURL}}hidden{{end}}" data-image-preview="cover" src="{{.Data.Movie.CoverURL}}"><span class="text-xs text-gray-500" data-image-empty="cover" {{if .Data.Movie.CoverURL}}hidden{{end}}>Cover preview</span></div></div>
+      </div>
+    </section>
+    <section class="bg-gray-800 rounded-2xl border border-gray-700 p-5 sm:p-7 space-y-4">
+      <h3 class="text-lg font-bold text-white">Video &amp; classification</h3>
+      <label class="block text-sm text-gray-300">Primary video URL <input type="url" name="video_url" value="{{firstStream .Data.Movie.Links}}" placeholder="https://..." class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white" data-video-url><span class="mt-2 block text-xs text-gray-400">Recognizes direct MP4/MKV, HLS, YouTube, Vimeo, embed and other links.</span><span class="mt-2 inline-block rounded bg-gray-700 px-2 py-1 text-xs text-gray-300" data-link-kind>Waiting for URL</span></label>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <label class="text-sm text-gray-300">Industry <select name="industry" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white"><option value="">Select industry</option>{{range .Data.Industries}}<option value="{{.}}" {{if eq $.Data.Movie.Industry .}}selected{{end}}>{{.}}</option>{{end}}</select></label>
+        <label class="text-sm text-gray-300">Dubbed version <span class="mt-3 flex items-center gap-2 text-white"><input type="checkbox" name="dubbed" {{if .Data.Movie.Dubbed}}checked{{end}}> Dubbed content</span></label>
+      </div>
+      <div><p class="mb-2 text-sm font-semibold text-gray-300">Languages</p><div class="grid grid-cols-2 sm:grid-cols-3 gap-2">{{range .Data.Languages}}<label class="flex items-center gap-2 rounded-lg bg-gray-900/60 px-3 py-2 text-sm text-gray-200"><input type="checkbox" name="languages" value="{{.}}" {{if has $.Data.Movie.Languages .}}checked{{end}}>{{.}}</label>{{end}}</div></div>
+      <div><p class="mb-2 text-sm font-semibold text-gray-300">Genres <span class="font-normal text-gray-500">(select multiple)</span></p><div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">{{range .Data.Categories}}<label class="flex items-center gap-2 rounded-lg bg-gray-900/60 px-3 py-2 text-sm text-gray-200"><input type="checkbox" name="genres" value="{{.Name}}" {{if has $.Data.Movie.Genres .Name}}checked{{end}}>{{.Name}}</label>{{end}}</div></div>
+      <label class="block text-sm text-gray-300">Cast / director <textarea name="cast" rows="3" maxlength="2000" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white" placeholder="Actor names, director...">{{.Data.Movie.Cast}}</textarea></label>
+      <label class="block text-sm text-gray-300">Description <textarea name="description" rows="5" maxlength="10000" class="mt-2 w-full rounded-xl border border-gray-600 bg-gray-900 px-3 py-3 text-white" placeholder="Write a brief description...">{{.Data.Movie.Description}}</textarea></label>
+    </section>
+    <section class="bg-gray-800 rounded-2xl border border-gray-700 p-5 sm:p-7 space-y-4">
+      <div><h3 class="text-lg font-bold text-white">Movie links</h3><p class="text-xs text-gray-400">Manage multiple stream and download sources. Keep the order you want users to see.</p></div>
+      <textarea name="movie_links_json"\1>{{if .Data.Movie.Links}}{{json .Data.Movie.Links}}{{end}}</textarea>
+      <p class="text-xs text-gray-500">JSON array: kind = stream/download, plus quality, label and URL. The legacy Primary URL above remains supported.</p>
+    </section>
+    {{if eq .Data.Movie.ContentType "series"}}
+    <section class="bg-gray-800 rounded-2xl border border-purple-500/30 p-5 sm:p-7 space-y-4">
+      <div><h3 class="text-lg font-bold text-white">Seasons &amp; episodes</h3><p class="text-xs text-gray-400">Add, edit, delete and reorder by changing the JSON array order. Each episode supports multiple stream/download links.</p></div>
+      <textarea name="seasons_json"\1>{{if .Data.Movie.Seasons}}{{json .Data.Movie.Seasons}}{{end}}</textarea>
+      <p class="text-xs text-purple-200">Example: [{"name":"Season 1","episodes":[{"name":"Episode 1","links":[{"kind":"stream","quality":"1080p","label":"Main","url":"https://..."}]}]}]</p>
+    </section>{{end}}
+    <div class="flex flex-col sm:flex-row gap-3"><button type="submit" class="flex-1 rounded-xl bg-blue-600 px-5 py-4 font-bold text-white hover:bg-blue-500">{{if .Data.IsNew}}Publish Content{{else}}Save Changes{{end}}</button><a href="/admin/" class="rounded-xl border border-gray-600 px-5 py-4 text-center font-semibold text-gray-300 hover:bg-gray-700">Cancel</a></div>
+  </form>
+  {{if not .Data.IsNew}}<form method="post" action="/admin/movies/{{.Data.Movie.ID}}/delete" data-confirm="Permanently delete this title and its seasons, episodes and links?" class="rounded-xl border border-red-500/30 bg-red-500/5 p-4"><input type="hidden" name="csrf" value="{{.CSRF}}"><button type="submit" class="text-sm font-semibold text-red-300 hover:text-red-200">Delete this content</button></form>{{end}}
+</div>
+{{end}}

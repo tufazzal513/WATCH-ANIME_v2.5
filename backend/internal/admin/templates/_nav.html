@@ -1,0 +1,64 @@
+{{define "sidebar"}}
+<div id="sidebar-overlay" class="sidebar-overlay" data-action="toggle-sidebar"></div>
+<div id="admin-sidebar" class="admin-sidebar">
+    <div class="p-5 border-b border-gray-700 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-white admin-app-name">{{.Brand.Pre}}<span class="text-blue-500">{{.Brand.Hi}}</span></h2>
+        <button type="button" data-action="toggle-sidebar" class="text-gray-400 hover:text-white" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="flex-1 overflow-y-auto py-4">
+        <a href="/admin/" class="sidebar-link{{if eq .Active "dashboard"}} active{{end}}"><i class="fas fa-tachometer-alt text-blue-400 w-5 text-center"></i> Dashboard</a>
+        <a href="/admin/movies" class="sidebar-link{{if eq .Active "movies"}} active{{end}}"><i class="fas fa-film text-blue-400 w-5 text-center"></i> Movies</a>
+        <a href="/admin/categories" class="sidebar-link{{if eq .Active "categories"}} active{{end}}"><i class="fas fa-tags text-blue-400 w-5 text-center"></i> Categories</a>
+        <a href="/admin/banners" class="sidebar-link{{if eq .Active "banners"}} active{{end}}"><i class="fas fa-images text-blue-400 w-5 text-center"></i> Banners</a>
+        <a href="/admin/users" class="sidebar-link{{if eq .Active "users"}} active{{end}}"><i class="fas fa-users text-blue-400 w-5 text-center"></i> Users</a>
+        <a href="/admin/settings" class="sidebar-link{{if eq .Active "settings"}} active{{end}}"><i class="fas fa-cog text-blue-400 w-5 text-center"></i> Settings</a>
+        <a href="/admin/broken-links" class="sidebar-link{{if eq .Active "broken-links"}} active{{end}}"><i class="fas fa-link-slash text-red-400 w-5 text-center"></i> Broken Links
+            {{if .BrokenBadge}}<span class="ml-auto bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">{{.BrokenBadge}}</span>{{end}}
+        </a>
+        <a href="/admin/workers" class="sidebar-link{{if eq .Active "workers"}} active{{end}}"><i class="fas fa-network-wired text-blue-400 w-5 text-center"></i> Workers</a>
+        <a href="/admin/server" class="sidebar-link{{if eq .Active "server"}} active{{end}}"><i class="fas fa-server text-blue-400 w-5 text-center"></i> Server</a>
+    </nav>
+    <div class="p-4 border-t border-gray-700">
+        <form method="post" action="/admin/logout">
+            <input type="hidden" name="csrf" value="{{.CSRF}}">
+            <button type="submit" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+    </div>
+</div>
+{{end}}
+
+{{define "header"}}
+<header class="sticky top-0 z-40 bg-gray-900/70 backdrop-blur-xl border-b border-gray-700/50 px-4 py-3 flex justify-between items-center shadow-lg transition-all">
+    <h1 class="text-xl font-bold text-white logo-anim admin-app-name">{{.Brand.Pre}}<span class="text-blue-500">{{.Brand.Hi}}</span> <span class="text-xs bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded ml-1">Admin</span></h1>
+    <button type="button" data-action="toggle-sidebar" class="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+        <i class="fas fa-bars"></i> Menu
+    </button>
+</header>
+{{end}}
+
+{{define "bottomnav"}}
+<nav class="fixed bottom-0 w-full bg-gray-900/80 backdrop-blur-xl border-t border-gray-700/50 h-20 shadow-2xl z-50" aria-label="Main">
+    <div class="flex justify-around items-center h-full max-w-4xl mx-auto px-1">
+        <a href="/admin/" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "dashboard"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-tachometer-alt text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Home</span>
+        </a>
+        <a href="/admin/movies/new" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "upload"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-cloud-upload-alt text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Upload</span>
+        </a>
+        <a href="/admin/movies" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "movies"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-list text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Content</span>
+        </a>
+        <a href="/admin/banners" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "banners"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-images text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Banner</span>
+        </a>
+        <a href="/admin/users" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "users"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-users text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Users</span>
+        </a>
+        <a href="/admin/settings" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full transition-colors {{if eq .Active "settings"}}text-blue-500{{else}}text-gray-400 hover:text-gray-200{{end}}">
+            <i class="fas fa-cog text-xl mb-1"></i><span class="text-[10px] font-medium uppercase">Settings</span>
+        </a>
+    </div>
+</nav>
+{{end}}

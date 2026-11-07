@@ -1,0 +1,264 @@
+<div id="dashboard" class="admin-page active fade-in">
+
+    <!-- Section 1: Users & Audience -->
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-white border-l-4 border-blue-500 pl-3">Audience Analytics</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+
+        <!-- Live Users Card -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-blue-500/30 flex items-center shadow-lg relative overflow-hidden">
+            <div class="absolute right-2 top-2 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></div>
+            <div class="absolute right-2 top-2 w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-satellite-dish text-red-500 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Live Users</p>
+                <p id="live-users-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Active (24h) -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-bolt text-green-500 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Active (24h)</p>
+                <p id="users-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Total Users -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg col-span-2 sm:col-span-1">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-users text-blue-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Total Users</p>
+                <p id="total-users-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 1.5: Security Analytics -->
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-white border-l-4 border-emerald-500 pl-3">Security & Auth</h2>
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- 24h Pwd Resets -->
+        <div class="bg-gray-800 p-3 sm:p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-600/20 flex-shrink-0 flex items-center justify-center mr-2 sm:mr-3">
+                <i class="fas fa-unlock-keyhole text-emerald-400 text-lg sm:text-xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-400 text-[10px] sm:text-xs font-medium leading-tight mb-0.5">Resets (24h)</p>
+                <p id="pwd-reset-24h" class="text-lg sm:text-2xl font-bold text-white">0</p>
+            </div>
+        </div>
+        <!-- Total Pwd Resets -->
+        <div class="bg-gray-800 p-3 sm:p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-teal-600/20 flex-shrink-0 flex items-center justify-center mr-2 sm:mr-3">
+                <i class="fas fa-key text-teal-400 text-lg sm:text-xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-400 text-[10px] sm:text-xs font-medium leading-tight mb-0.5">Total Sent</p>
+                <p id="pwd-reset-total" class="text-lg sm:text-2xl font-bold text-white">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Content Library -->
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-white border-l-4 border-purple-500 pl-3">Content Library</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+
+        <!-- Total Content -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-indigo-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-photo-video text-indigo-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Total Content</p>
+                <p id="movies-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Total Movies -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-sky-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-film text-sky-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Total Movies</p>
+                <p id="single-movies-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Total Series -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-tv text-purple-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Total Series</p>
+                <p id="series-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-th-list text-orange-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Genres</p>
+                <p id="categories-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Banners -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-teal-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-images text-teal-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Banners</p>
+                <p id="banners-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Upcoming -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-clock text-amber-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Upcoming</p>
+                <p id="upcoming-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+
+        <!-- Total Private -->
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex items-center shadow-lg col-span-2 md:col-span-1">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-600/20 flex-shrink-0 flex items-center justify-center mr-3">
+                <i class="fas fa-eye-slash text-slate-400 text-lg sm:text-xl"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-gray-400 text-[11px] sm:text-sm truncate">Total Private</p>
+                <p id="private-count" class="text-lg sm:text-2xl font-bold truncate text-white">0</p>
+            </div>
+        </div>
+    </div>
+        <!-- Old layout safely removed -->
+
+        <!-- NEW: User Growth Trend Chart -->
+        <div class="group bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg mt-6 relative overflow-hidden flex flex-col hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all duration-300">
+            <!-- Background Glow Effect -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-600/10 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/20 transition-all duration-500"></div>
+
+            <div class="flex items-center justify-between mb-4 relative z-20">
+                <div class="flex items-center gap-3">
+                    <div class="bg-emerald-900/50 p-2.5 rounded-lg text-emerald-400 group-hover:text-emerald-300 group-hover:animate-pulse shadow-inner border border-emerald-500/20">
+                        <i class="fas fa-users text-lg"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-200 text-base font-bold tracking-wide">User Growth Trend</p>
+                        <p class="text-[10px] text-gray-400 font-medium">Daily new users <span class="text-emerald-400 ml-1">■ Growth</span> <span class="text-red-400 ml-1">■ Drop</span></p>
+                    </div>
+                </div>
+                <!-- Time Filter Dropdown -->
+                <select id="user-chart-filter" class="bg-emerald-900/30 text-emerald-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-emerald-500/30 focus:border-emerald-500 outline-none cursor-pointer hover:bg-emerald-800/40 transition-colors backdrop-blur-sm shadow-inner">
+                    <option value="7">7 Days</option>
+                    <option value="30" selected>1 Month</option>
+                    <option value="180">6 Months</option>
+                    <option value="365">1 Year</option>
+                    <option value="730">2 Years</option>
+                    <option value="all">Lifetime</option>
+                </select>
+            </div>
+            <div class="relative z-10 w-full h-[200px] sm:h-[250px]">
+                <canvas id="user-growth-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6 relative z-10">
+            <!-- AD Unlocks Trend Chart (With Filter) -->
+            <div class="group bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden flex flex-col">
+                <!-- Background Glow Effect -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl -z-10 group-hover:bg-blue-500/20 transition-all duration-500"></div>
+
+                <div class="flex items-center justify-between mb-3 relative z-20">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-blue-900/50 p-2 rounded-lg text-blue-400 group-hover:text-blue-300 group-hover:animate-pulse">
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                        <p class="text-gray-200 text-sm font-bold tracking-wide">AD Unlocks Trend</p>
+                    </div>
+                    <!-- Time Filter Dropdown -->
+                    <select id="dl-chart-filter" class="bg-blue-900/30 text-blue-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-blue-500/30 focus:border-blue-500 outline-none cursor-pointer hover:bg-blue-800/40 transition-colors backdrop-blur-sm shadow-inner">
+                        <option value="7">7 Days</option>
+                        <option value="30">1 Month</option>
+                        <option value="180">6 Months</option>
+                        <option value="365">1 Year</option>
+                        <option value="730">2 Years</option>
+                        <option value="all">Lifetime</option>
+                    </select>
+                </div>
+                <div class="relative z-10 flex-1">
+                    <canvas id="dl-line-chart" height="120"></canvas>
+                </div>
+            </div>
+
+            <!-- Funnel Chart (With Filter) -->
+            <div class="group bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden flex flex-col">
+                <!-- Background Glow Effect -->
+                <div class="absolute bottom-0 right-0 w-32 h-32 bg-purple-600/10 rounded-full blur-3xl -z-10 group-hover:bg-purple-500/20 transition-all duration-500"></div>
+
+                <div class="flex items-center justify-between mb-3 relative z-20">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-purple-900/50 p-2 rounded-lg text-purple-400 group-hover:text-purple-300 group-hover:animate-pulse">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <p class="text-gray-200 text-sm font-bold tracking-wide">Funnel (Attempts &rarr; Unlocks)</p>
+                    </div>
+                    <!-- Funnel Time Filter Dropdown -->
+                    <select id="dl-funnel-filter" class="bg-purple-900/30 text-purple-300 text-xs font-semibold px-3 py-1.5 rounded-lg border border-purple-500/30 focus:border-purple-500 outline-none cursor-pointer hover:bg-purple-800/40 transition-colors backdrop-blur-sm shadow-inner">
+                        <option value="7">7 Days</option>
+                        <option value="30">1 Month</option>
+                        <option value="180">6 Months</option>
+                        <option value="365">1 Year</option>
+                        <option value="730">2 Years</option>
+                        <option value="all">Lifetime</option>
+                    </select>
+                </div>
+                <div class="relative z-10 flex-1">
+                    <canvas id="dl-funnel-chart" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Activity Feed -->
+        <div class="group bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg mt-6 relative overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+            <!-- Background Glow Effect -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-600/10 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/20 transition-all duration-500"></div>
+
+            <div class="flex items-center justify-between mb-4 relative z-20 border-b border-gray-700/50 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="bg-emerald-900/50 p-2 rounded-lg text-emerald-400 group-hover:text-emerald-300 group-hover:animate-pulse">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="text-gray-200 text-sm font-bold tracking-wide">Live Ad Activity Feed</h3>
+                </div>
+                <!-- Updated Clear Button -->
+                <button id="dl-clear-events" class="text-[10px] bg-gray-700/80 hover:bg-gray-600 text-gray-300 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 border border-gray-600 shadow-sm active:scale-95">
+                    <i class="fas fa-broom"></i> Clear Feed
+                </button>
+            </div>
+
+            <div id="dl-events-list" class="space-y-3 max-h-[350px] overflow-y-auto pr-2 relative z-10" style="scrollbar-width: thin; scrollbar-color: #4b5563 #1f2937;"></div>
+
+            <div id="dl-events-empty" class="text-center py-8 hidden relative z-10">
+                <div class="text-gray-600 text-4xl mb-3"><i class="fas fa-box-open"></i></div>
+                <p class="text-sm text-gray-400 font-medium">No recent activity visible.</p>
+                <p class="text-[10px] text-gray-500 mt-1">Waiting for new events...</p>
+            </div>
+        </div>
+    </div>
+</div>

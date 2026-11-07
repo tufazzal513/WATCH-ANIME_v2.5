@@ -1,0 +1,20 @@
+<!-- Admin Left Sidebar -->
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<div id="admin-sidebar" class="admin-sidebar">
+    <div class="p-5 border-b border-gray-700 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-white admin-app-name">Move<span class="text-blue-500">X</span></h2>
+        <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="flex-1 overflow-y-auto py-4">
+        <div class="sidebar-link" onclick="showAdminPage('broken-links'); toggleSidebar();">
+            <i class="fas fa-link-slash text-red-400 w-5 text-center"></i> Broken Links 
+            <span id="broken-badge" class="ml-auto bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full hidden">0</span>
+        </div>
+        <!-- You can add more sidebar menus here later -->
+    </div>
+    <div class="p-4 border-t border-gray-700">
+        <button id="admin-logout-sidebar-btn" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+{{define "content"}}
+<div class="fade-in space-y-6">
+    <div class="flex items-center justify-between gap-3">
+        <h2 class="text-2xl font-bold text-white"><i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>Dashboard</h2>
+        <a href="/admin/broken-links" class="text-sm text-red-300 hover:text-red-200"><i class="fas fa-link-slash mr-1"></i>Broken reports ({{.Data.OpenBroken}})</a>
+    </div>
+
+    <section>
+        <h3 class="text-lg font-bold text-white border-l-4 border-blue-500 pl-3 mb-3">Audience &amp; Security</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="bg-gray-800 rounded-xl border border-blue-500/30 p-4"><p class="text-gray-400 text-xs uppercase">Live users</p><p class="text-3xl font-bold text-white">{{.Data.Live}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Active (24h)</p><p class="text-3xl font-bold text-white">{{.Data.Active24}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Users</p><p class="text-3xl font-bold text-white">{{.Data.Users}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Password resets (24h)</p><p class="text-3xl font-bold text-white">{{.Data.Reset24}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Total reset requests</p><p class="text-3xl font-bold text-white">{{.Data.ResetTotal}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Errors (24h)</p><p class="text-3xl font-bold text-red-300">{{.Data.Errors24}}</p></div>
+        </div>
+    </section>
+
+    <section>
+        <h3 class="text-lg font-bold text-white border-l-4 border-purple-500 pl-3 mb-3">Content Library</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Movies &amp; series</p><p class="text-3xl font-bold text-white">{{.Data.Movies}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Total views</p><p class="text-3xl font-bold text-white">{{.Data.Views}}</p></div>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4"><p class="text-gray-400 text-xs uppercase">Open broken links</p><p class="text-3xl font-bold text-red-300">{{.Data.OpenBroken}}</p></div>
+        </div>
+    </section>
+
+    <section class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div><h3 class="text-white font-bold">User Growth Trend</h3><p class="text-xs text-gray-400">Daily new accounts, UTC</p></div>
+            <div class="flex gap-2 text-xs">
+                <a class="px-3 py-1.5 rounded-lg border {{if eq .Data.GrowthDays 7}}border-emerald-400 text-emerald-300{{else}}border-gray-600 text-gray-300{{end}}" href="/admin/?days=7">7 days</a>
+                <a class="px-3 py-1.5 rounded-lg border {{if eq .Data.GrowthDays 30}}border-emerald-400 text-emerald-300{{else}}border-gray-600 text-gray-300{{end}}" href="/admin/?days=30">30 days</a>
+                <a class="px-3 py-1.5 rounded-lg border {{if eq .Data.GrowthDays 90}}border-emerald-400 text-emerald-300{{else}}border-gray-600 text-gray-300{{end}}" href="/admin/?days=90">90 days</a>
+            </div>
+        </div>
+        <svg viewBox="0 0 720 180" role="img" aria-label="Daily user growth chart" class="w-full h-48">
+            <line x1="8" y1="168" x2="712" y2="168" stroke="#4b5563" stroke-width="1"/>
+            <line x1="8" y1="96" x2="712" y2="96" stroke="#374151" stroke-width="1" stroke-dasharray="4 5"/>
+            <line x1="8" y1="12" x2="712" y2="12" stroke="#374151" stroke-width="1" stroke-dasharray="4 5"/>
+            {{if .Data.GrowthPoints}}
+            <polygon points="{{.Data.GrowthArea}}" fill="#10b981" fill-opacity="0.10"/>
+            <polyline points="{{.Data.GrowthPoints}}" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            {{else}}
+            <text x="360" y="90" text-anchor="middle" fill="#9ca3af" font-size="13">No user growth data yet</text>
+            {{end}}
+        </svg>
+        <div class="flex justify-between text-[10px] text-gray-500"><span>{{if .Data.Growth}}{{(index .Data.Growth 0).Day}}{{end}}</span><span>Max {{.Data.GrowthMax}} new users/day</span><span>{{if .Data.Growth}}{{(index .Data.Growth (add (len .Data.Growth) -1)).Day}}{{end}}</span></div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <section class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+            <h3 class="font-bold text-white mb-3"><i class="fas fa-magnifying-glass text-blue-400 mr-2"></i>Top Searches</h3>
+            {{if .Data.TopSearches}}
+            <div class="space-y-2">{{range .Data.TopSearches}}<div class="flex justify-between gap-3 text-sm border-b border-gray-700 pb-2"><span class="text-gray-200 truncate">{{.Term}}</span><span class="text-blue-300 font-bold">{{.Count}}</span></div>{{end}}</div>
+            {{else}}<p class="text-sm text-gray-500">No search data yet.</p>{{end}}
+        </section>
+        <section class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+            <div class="flex justify-between items-center mb-3"><h3 class="font-bold text-white"><i class="fas fa-link text-red-400 mr-2"></i>Recent Broken Links</h3><a href="/admin/broken-links" class="text-xs text-blue-300">View all</a></div>
+            {{if .Data.RecentBroken}}
+            <div class="space-y-3">{{range .Data.RecentBroken}}<div class="border-b border-gray-700 pb-2"><a class="text-sm font-semibold text-white hover:text-blue-300" href="/admin/movies/{{.MovieID}}/edit">{{.Title}}</a><p class="text-xs text-red-300">{{.EpInfo}} · {{.ServerType}}</p><p class="text-[10px] text-gray-500">{{ms .ReportedAt}} · {{.Reports}} report(s)</p></div>{{end}}</div>
+            {{else}}<p class="text-sm text-gray-500">No open reports.</p>{{end}}
+        </section>
+        <section class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+            <h3 class="font-bold text-white mb-3"><i class="fas fa-triangle-exclamation text-amber-400 mr-2"></i>Recent Client Errors</h3>
+            {{if .Data.RecentErrors}}
+            <div class="space-y-3">{{range .Data.RecentErrors}}<div class="border-b border-gray-700 pb-2"><p class="text-sm text-red-300 break-words">{{if .Message}}{{.Message}}{{else}}(No message){{end}}</p><p class="text-[10px] text-gray-500">{{.Panel}} · {{ms .At}} · {{.UID}}</p></div>{{end}}</div>
+            {{else}}<p class="text-sm text-gray-500">No errors reported.</p>{{end}}
+        </section>
+        <section class="bg-gray-800 rounded-xl border border-gray-700 p-4">
+            <h3 class="font-bold text-white mb-3"><i class="fas fa-clipboard-list text-emerald-400 mr-2"></i>Recent Admin Activity</h3>
+            {{if .Data.RecentAudit}}
+            <div class="space-y-3">{{range .Data.RecentAudit}}<div class="border-b border-gray-700 pb-2"><p class="text-sm text-gray-200">{{.Action}} <span class="text-gray-400">{{.Target}}</span></p><p class="text-[10px] text-gray-500">{{ms .TS}} · {{.ActorUID}}</p></div>{{end}}</div>
+            {{else}}<p class="text-sm text-gray-500">No admin activity yet.</p>{{end}}
+        </section>
+    </div>
+</div>
+{{end}}

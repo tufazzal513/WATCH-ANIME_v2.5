@@ -1,0 +1,276 @@
+/* Ported from the legacy admin panel (base, logo, search, picker, filters, users, sidebar, theme, pro). */
+/* ---- base.css ---- */
+body { font-family: 'Poppins', sans-serif; }
+.admin-page { display: none; }
+.admin-page.active { display: block; }
+.fade-in { animation: fadeIn 0.3s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---- logo.css ---- */
+/* Logo Animation */
+@keyframes slideInLogo {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.logo-anim { animation: slideInLogo 0.8s ease-out forwards; }
+
+/* ---- search.css ---- */
+/* Search result item hover */
+.search-result-item:hover { background-color: #374151; }
+
+/* ---- picker.css ---- */
+/* Dual wheel picker custom styles */
+.picker-list {
+    max-height: 150px; /* প্রায় ৩টি আইটেম দেখাবে */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #4b5563 #1f2937;
+}
+.picker-list::-webkit-scrollbar {
+    width: 6px;
+}
+.picker-list::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 8px;
+}
+.picker-list::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 8px;
+}
+.picker-list .picker-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #374151;
+    transition: all 0.2s;
+    text-align: center;
+}
+.picker-list .picker-item.selected {
+    background-color: rgba(229, 9, 20, 0.3);
+    color: white;
+    font-weight: 600;
+    border-left: 4px solid #e50914;
+}
+.picker-list .picker-item:hover {
+    background-color: #374151;
+}
+.edit-panel {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* ---- filters.css ---- */
+/* ================= FILTER BUTTONS (UPDATED & HIGHLIGHTED) ================= */
+.filter-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}
+.filter-btn.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border-color: #60a5fa;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+.filter-btn.inactive {
+    background-color: #374151; 
+    color: #d1d5db; 
+    border-color: #4b5563; 
+}
+.filter-btn.inactive:hover {
+    background-color: #4b5563; 
+    color: #ffffff;
+    border-color: #6b7280; 
+}
+.filter-group {
+    background: rgba(31, 41, 55, 0.6);
+    padding: 4px 6px;
+    border-radius: 9999px;
+    border: 1px solid #374151;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+.filter-label {
+    font-size: 10px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-left: 8px;
+    margin-right: 4px;
+    letter-spacing: 1px;
+}
+
+/* ---- users.css ---- */
+/* User select specific overrides */
+.user-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: rgba(31, 41, 55, 0.6);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #374151;
+}
+/* User avatar style */
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: #374151; }
+
+/* ---- sidebar.css ---- */
+/* Admin Sidebar Styles */
+.sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.sidebar-overlay.active { opacity: 1; visibility: visible; }
+.admin-sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: #111827; z-index: 101; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 10px 0 30px rgba(0,0,0,0.5); border-right: 1px solid #374151; display: flex; flex-direction: column; }
+.admin-sidebar.active { transform: translateX(0); }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 16px 20px; color: #9ca3af; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; cursor: pointer; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(37,99,235,0.1); color: #fff; border-left-color: #3b82f6; }
+
+/* ---- theme.css ---- */
+:root { --accent: #e50914; --accent2: #b20710; }
+/* Netflix-like quick theme overrides (keeps existing Tailwind classes) */
+.text-blue-500{ color: var(--accent) !important; }
+.text-blue-400{ color: #ff4d4d !important; }
+.bg-blue-600{ background-color: var(--accent) !important; }
+.hover\:bg-blue-700:hover{ background-color: var(--accent2) !important; }
+.border-blue-500\/30{ border-color: rgba(229,9,20,.3) !important; }
+.ring-blue-600, .focus\:border-blue-500:focus{ border-color: var(--accent) !important; }
+
+/* ---- pro.css ---- */
+/* ===== ADMIN: professional dark dashboard (black/red, responsive) ===== */
+:root{--bg:#0f0f0f;--surface:#181818;--surface2:#242424;--line:rgba(255,255,255,.08);--nf:var(--accent,#e50914)}
+body{background:var(--bg)!important;font-family:'Roboto','Helvetica Neue',Arial,sans-serif!important}
+.bg-gray-900{background-color:var(--bg)!important}
+.bg-gray-800{background-color:var(--surface)!important}
+.bg-gray-700{background-color:var(--surface2)!important}
+.border-gray-700,.border-gray-600{border-color:var(--line)!important}
+.admin-sidebar{background:#000!important;border-right:1px solid var(--line)!important}
+.sidebar-link{margin:2px 10px;border-radius:6px;border-left:0!important;padding:12px 14px!important;color:#b3b3b3}
+.sidebar-link:hover{background:var(--surface2)!important;color:#fff!important}
+.sidebar-link.active{background:var(--nf)!important;color:#fff!important}
+.rounded-lg,.rounded-xl{border-radius:8px}
+.bg-gray-800.rounded-lg,.bg-gray-800.rounded-xl{border:1px solid var(--line);box-shadow:none}
+input,select,textarea{border-radius:4px!important;background:#2a2a2a!important;border-color:#3a3a3a!important}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#fff!important}
+button.bg-blue-600,button.bg-indigo-600{background:var(--nf)!important;border-radius:4px;font-weight:700}
+table{width:100%}
+@media(max-width:767px){.overflow-x-auto,main table{overflow-x:auto}}
+
+/* classification picker */
+.mx-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #3a3a3a;background:#242424;color:#ddd;border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
+.mx-chip.on{background:var(--nf,#e50914);border-color:var(--nf,#e50914);color:#fff}
+.mx-chip button{background:none;color:inherit;font-size:14px;line-height:1;padding:0}
+.mx-glist{max-height:190px;overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 10px;border:1px solid #2f2f2f;border-radius:10px;padding:8px;background:#141414}
+@media(min-width:640px){.mx-glist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mx-row{display:flex;align-items:center;gap:8px;padding:6px 4px;font-size:13px;color:#ddd;cursor:pointer;border-radius:6px}
+.mx-row:hover{background:#222}
+
+
+
+/* P8 dashboard and broken-link page utilities (kept local; Tailwind rebuild can regenerate these). */
+.flex-wrap { flex-wrap: wrap; }
+.gap-3 { gap: .75rem; }
+.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: .5rem; }
+.space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: .75rem; }
+.space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+.space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+.grid-cols-1 { grid-template-columns: repeat(1,minmax(0,1fr)); }
+@media (min-width: 1024px) { .lg\:grid-cols-2 { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+.border-collapse { border-collapse: collapse; }
+.divide-y > :not([hidden]) ~ :not([hidden]) { border-top-width: 1px; }
+.divide-gray-700 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+.border-l-4 { border-left-width: 4px; }
+.border-blue-500 { border-color: #3b82f6; }
+.border-purple-500 { border-color: #a855f7; }
+.border-blue-500\/30 { border-color: rgb(59 130 246 / .3); }
+.border-green-500\/30 { border-color: rgb(34 197 94 / .3); }
+.bg-emerald-600\/20 { background-color: rgb(5 150 105 / .2); }
+.bg-green-600\/20 { background-color: rgb(22 163 74 / .2); }
+.bg-gray-700\/60 { background-color: rgb(55 65 81 / .6); }
+.text-amber-400 { color: #fbbf24; }
+.text-blue-300 { color: #93c5fd; }
+.text-emerald-300 { color: #6ee7b7; }
+.text-gray-300 { color: #d1d5db; }
+.text-gray-500 { color: #6b7280; }
+.text-green-300 { color: #86efac; }
+.text-purple-300 { color: #d8b4fe; }
+.text-red-300 { color: #fca5a5; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.break-words { overflow-wrap: break-word; }
+.flex-wrap { flex-wrap: wrap; }
+.h-14 { height: 3.5rem; }
+.h-48 { height: 12rem; }
+.w-10 { width: 2.5rem; }
+.min-w-\[180px\] { min-width: 180px; }
+.min-w-\[760px\] { min-width: 760px; }
+.mb-3 { margin-bottom: .75rem; }
+.mr-1 { margin-right: .25rem; }
+.pl-3 { padding-left: .75rem; }
+.object-cover { object-fit: cover; }
+.outline-none { outline: 2px solid transparent; outline-offset: 2px; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.whitespace-nowrap { white-space: nowrap; }
+.hover\:bg-emerald-600:hover { background-color: #059669; }
+.hover\:bg-gray-700\/40:hover { background-color: rgb(55 65 81 / .4); }
+.hover\:bg-green-600:hover { background-color: #16a34a; }
+.hover\:bg-red-600:hover { background-color: #dc2626; }
+.hover\:text-blue-200:hover { color: #bfdbfe; }
+.hover\:text-blue-300:hover { color: #93c5fd; }
+.hover\:text-red-200:hover { color: #fecaca; }
+.focus\:border-red-500:focus { border-color: #ef4444; }
+
+/* P9 movie form utilities used while the canonical Tailwind bundle is regenerated. */
+.bg-blue-900\/10{background-color:rgb(30 58 138 / .1)}
+.bg-purple-900\/10{background-color:rgb(88 28 135 / .1)}
+.bg-gray-900\/50{background-color:rgb(17 24 39 / .5)}
+.bg-gray-900\/60{background-color:rgb(17 24 39 / .6)}
+.bg-red-500\/5{background-color:rgb(239 68 68 / .05)}
+.border-purple-500\/30{border-color:rgb(168 85 247 / .3)}
+.border-red-500\/40{border-color:rgb(239 68 68 / .4)}
+.text-blue-200{color:#bfdbfe}.text-purple-100{color:#f3e8ff}.text-red-200{color:#fecaca}
+.font-normal{font-weight:400}.rounded-2xl{border-radius:1rem}.h-52{height:13rem}
+.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}
+@media(min-width:640px){.sm\:flex-row{flex-direction:row}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:p-7{padding:1.75rem}}
+@media(min-width:768px){.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+
+/* P10 All Movies table and season/link editor utility fallbacks. */
+.bg-emerald-500\/15{background-color:rgb(16 185 129 / .15)}
+.bg-amber-500\/15{background-color:rgb(245 158 11 / .15)}
+.bg-blue-500\/15{background-color:rgb(59 130 246 / .15)}
+.text-emerald-300{color:#6ee7b7}.text-amber-300{color:#fcd34d}.text-blue-300{color:#93c5fd}
+.min-w-\[760px\]{min-width:760px}
+
+/* P11 categories, banners and user administration utility fallbacks. */
+.gap-2{gap:.5rem}.gap-4{gap:1rem}.space-y-5>:not([hidden])~:not([hidden]){margin-top:1.25rem}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.min-w-0{min-width:0}.min-w-\[650px\]{min-width:650px}.min-w-\[850px\]{min-width:850px}
+.h-9{height:2.25rem}.w-9{width:2.25rem}.w-20{width:5rem}.h-28{height:7rem}.w-52{width:13rem}
+.rounded-full{border-radius:9999px}.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}
+.break-all{overflow-wrap:anywhere}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-2xl{font-size:1.5rem;line-height:2rem}.font-semibold{font-weight:600}.font-bold{font-weight:700}.font-medium{font-weight:500}
+.bg-emerald-500\/15{background-color:rgb(16 185 129 / .15)}.bg-amber-500\/15{background-color:rgb(245 158 11 / .15)}.bg-red-500\/15{background-color:rgb(239 68 68 / .15)}
+.text-emerald-300{color:#6ee7b7}.text-amber-300{color:#fcd34d}.text-red-300{color:#fca5a5}.text-gray-400{color:#9ca3af}.text-gray-500{color:#6b7280}.text-white{color:#fff}
+@media(min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:col-span-2{grid-column:span 2/span 2}.sm\:col-span-4{grid-column:span 4/span 4}.sm\:w-52{width:13rem}}
+
+/* P12 settings, social links and notifications utility fallbacks. */
+.bg-gray-900\/70{background-color:rgb(17 24 39 / .7)}
+.h-12{height:3rem}.p-1{padding:.25rem}.tracking-wide{letter-spacing:.025em}.whitespace-pre-wrap{white-space:pre-wrap}
+.space-y-2>:not([hidden])~:not([hidden]){margin-top:.5rem}.space-y-3>:not([hidden])~:not([hidden]){margin-top:.75rem}
+@media(min-width:640px){.sm\:p-5{padding:1.25rem}.sm\:col-span-3{grid-column:span 3/span 3}.sm\:w-\[58\%\]{width:58%}}
+
+/* P14 local snapshot action fallback while the canonical Tailwind build is unavailable. */
+.hover\:bg-blue-500:hover{background-color:#3b82f6}

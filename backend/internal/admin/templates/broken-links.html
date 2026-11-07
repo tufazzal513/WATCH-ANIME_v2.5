@@ -1,0 +1,72 @@
+{{define "content"}}
+<div class="fade-in space-y-4">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+        <div><h2 class="text-2xl font-bold text-white"><i class="fas fa-link-slash text-red-400 mr-2"></i>Broken Links Reports</h2><p class="text-sm text-gray-400 mt-1">{{.Data.Total}} report(s) found</p></div>
+        <a href="/admin/" class="text-sm text-blue-300 hover:text-blue-200"><i class="fas fa-arrow-left mr-1"></i>Dashboard</a>
+    </div>
+    <form id="broken-filter" class="bg-gray-800 p-4 rounded-xl border border-gray-700 flex flex-wrap gap-3 items-center"
+          method="get" action="/admin/broken-links" hx-get="/admin/broken-links" hx-target="#broken-table-body" hx-trigger="keyup changed delay:350ms from:input, change from:select" hx-include="#broken-filter">
+        <input type="search" name="q" value="{{.Data.Query}}" placeholder="Search title or episode..." class="flex-1 min-w-[180px] bg-gray-900 text-white px-3 py-2 rounded-lg border border-gray-600 text-sm focus:border-red-500 outline-none">
+        <select name="type" class="bg-gray-900 text-gray-200 text-sm px-3 py-2 rounded-lg border border-gray-600">
+            <option value="">All content</option><option value="movie" {{if eq .Data.Type "movie"}}selected{{end}}>Movies</option><option value="series" {{if eq .Data.Type "series"}}selected{{end}}>Series</option>
+        </select>
+        <select name="status" class="bg-gray-900 text-gray-200 text-sm px-3 py-2 rounded-lg border border-gray-600">
+            <option value="">All statuses</option><option value="open" {{if eq .Data.Status "open"}}selected{{end}}>Open</option><option value="resolved" {{if eq .Data.Status "resolved"}}selected{{end}}>Resolved</option>
+        </select>
+        <input type="hidden" name="page" value="1">
+        <button type="submit" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold">Filter</button>
+    </form>
+    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden shadow-lg">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[760px]">
+                <thead class="bg-gray-700/60 text-gray-300 text-xs uppercase"><tr>
+                    <th class="p-3">Poster</th><th class="p-3">Content info</th><th class="p-3">Broken episode</th><th class="p-3">Server</th><th class="p-3">Reports</th><th class="p-3 text-right">Actions</th>
+                </tr></thead>
+                {{template "broken-table" .Data}}
+            </table>
+        </div>
+    </div>
+    <div class="flex items-center justify-between gap-3 text-sm text-gray-400">
+        <span>Page {{.Data.Page}} of {{.Data.Pages}}</span>
+        <div class="flex gap-2">
+            {{if gt .Data.Page 1}}
+            <a class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:text-blue-300" href="/admin/broken-links?q={{urlquery .Data.Query}}&amp;type={{urlquery .Data.Type}}&amp;status={{urlquery .Data.Status}}&amp;page={{add .Data.Page -1}}" hx-get="/admin/broken-links?q={{urlquery .Data.Query}}&amp;type={{urlquery .Data.Type}}&amp;status={{urlquery .Data.Status}}&amp;page={{add .Data.Page -1}}" hx-target="#broken-table-body">Previous</a>
+            {{end}}
+            {{if lt .Data.Page .Data.Pages}}
+            <a class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:text-blue-300" href="/admin/broken-links?q={{urlquery .Data.Query}}&amp;type={{urlquery .Data.Type}}&amp;status={{urlquery .Data.Status}}&amp;page={{add .Data.Page 1}}" hx-get="/admin/broken-links?q={{urlquery .Data.Query}}&amp;type={{urlquery .Data.Type}}&amp;status={{urlquery .Data.Status}}&amp;page={{add .Data.Page 1}}" hx-target="#broken-table-body">Next</a>
+            {{end}}
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "broken-table"}}
+<tbody id="broken-table-body" class="divide-y divide-gray-700">
+{{if .Items}}
+{{range .Items}}
+<tr class="hover:bg-gray-700/40 transition-colors">
+    <td class="p-3"><img src="{{.PosterURL}}" alt="" loading="lazy" class="w-10 h-14 object-cover rounded shadow"></td>
+    <td class="p-3"><a href="/admin/movies/{{.MovieID}}/edit" class="font-bold text-white hover:text-blue-300">{{.Title}}</a><div class="text-[10px] text-gray-400 mt-1">{{if eq .ContentType "series"}}<span class="text-purple-300">SERIES</span>{{else}}<span class="text-blue-300">MOVIE</span>{{end}} · {{ms .ReportedAt}}</div></td>
+    <td class="p-3 text-red-300 text-sm font-semibold">{{.EpInfo}}</td>
+    <td class="p-3 text-xs text-gray-300 uppercase">{{.ServerType}}</td>
+    <td class="p-3 text-sm text-gray-300">{{.Reports}}</td>
+    <td class="p-3 text-right whitespace-nowrap">
+        <a href="/admin/movies/{{.MovieID}}/edit" class="inline-block bg-green-600/20 text-green-300 hover:bg-green-600 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-green-500/30">Fix link</a>
+        {{if eq .Status "open"}}
+        <form class="inline" method="post" action="/admin/broken-links/{{.ID}}/resolve" hx-post="/admin/broken-links/{{.ID}}/resolve" hx-target="#broken-table-body">
+            <input type="hidden" name="csrf" value="{{$.CSRF}}">
+            <button type="submit" class="bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-lg text-xs border border-emerald-500/30">Resolve</button>
+        </form>
+        {{end}}
+        <form class="inline" method="post" action="/admin/broken-links/{{.ID}}/delete" hx-post="/admin/broken-links/{{.ID}}/delete" hx-target="#broken-table-body" data-confirm="Delete this report permanently?">
+            <input type="hidden" name="csrf" value="{{$.CSRF}}">
+            <button type="submit" class="bg-gray-700 text-gray-300 hover:bg-red-600 hover:text-white px-3 py-1.5 rounded-lg text-xs">Delete</button>
+        </form>
+    </td>
+</tr>
+{{end}}
+{{else}}
+<tr><td colspan="6" class="p-8 text-center text-gray-500 font-semibold">No broken link reports found.</td></tr>
+{{end}}
+</tbody>
+{{end}}

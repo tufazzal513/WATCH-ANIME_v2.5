@@ -1,0 +1,52 @@
+{{define "content"}}
+<div class="fade-in space-y-5">
+  <div><h2 class="text-2xl font-bold text-white"><i class="fas fa-server text-blue-400 mr-2"></i>Server</h2><p class="mt-1 text-sm text-gray-400">Server operations and environment overview. Secret values are never displayed.</p></div>
+  <section class="rounded-xl border border-gray-700 bg-gray-800 p-4 sm:p-5">
+    <h3 class="mb-3 text-lg font-bold text-blue-300">Environment configuration</h3>
+    <div class="divide-y divide-gray-700">{{range .Data.Config}}<div class="flex flex-col gap-1 py-2 sm:flex-row sm:items-center sm:justify-between"><span class="text-xs font-semibold text-gray-400">{{.Key}}</span><span class="break-all text-sm text-white">{{.Value}}</span></div>{{end}}</div>
+  </section>
+  <section class="rounded-xl border border-gray-700 bg-gray-800 p-4 sm:p-5">
+    <h3 class="mb-2 text-lg font-bold text-blue-300">Telegram connection</h3>
+    <p class="text-sm text-gray-300">API credentials: <strong>{{if .Data.TelegramConfigured}}Configured{{else}}Not configured{{end}}</strong></p>
+    <p class="mt-1 text-sm text-gray-300">Saved session file: <strong>{{if .Data.SessionExists}}Present{{else}}Not found{{end}}</strong></p>
+    {{if .Data.TelegramConfigured}}
+      {{if not .Data.SessionExists}}
+      <div class="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-200">No authorized user session exists yet. Complete the phone-code login below. If Telegram asks for a cloud password, use the 2FA form after submitting the code.</div>
+      {{else}}
+      <p class="mt-3 rounded-lg border border-green-500/30 bg-green-500/10 p-3 text-xs text-green-200">An MTProto session file exists. Backup operations will upload the compressed database snapshot to the configured Telegram chat and apply retention.</p>
+      {{end}}
+      <div class="mt-4 grid gap-4 md:grid-cols-3">
+        <form method="post" action="/admin/server/telegram/login" class="space-y-2 rounded-lg border border-gray-700 p-3"><input type="hidden" name="csrf" value="{{.CSRF}}"><label class="block text-xs text-gray-300">Phone number with country code</label><input name="phone" type="tel" required placeholder="+8801XXXXXXXXX" class="w-full rounded bg-gray-900 px-3 py-2 text-sm text-white"><button class="rounded bg-blue-600 px-3 py-2 text-xs font-semibold text-white">Request login code</button></form>
+        <form method="post" action="/admin/server/telegram/code" class="space-y-2 rounded-lg border border-gray-700 p-3"><input type="hidden" name="csrf" value="{{.CSRF}}"><label class="block text-xs text-gray-300">Telegram login code</label><input name="code" inputmode="numeric" autocomplete="one-time-code" required class="w-full rounded bg-gray-900 px-3 py-2 text-sm text-white"><button class="rounded bg-blue-600 px-3 py-2 text-xs font-semibold text-white">Verify code</button></form>
+        <form method="post" action="/admin/server/telegram/password" class="space-y-2 rounded-lg border border-gray-700 p-3"><input type="hidden" name="csrf" value="{{.CSRF}}"><label class="block text-xs text-gray-300">Telegram 2FA cloud password</label><input name="password" type="password" autocomplete="current-password" required class="w-full rounded bg-gray-900 px-3 py-2 text-sm text-white"><button class="rounded bg-blue-600 px-3 py-2 text-xs font-semibold text-white">Verify 2FA password</button></form>
+      </div>
+      <form method="post" action="/admin/server/telegram/cancel" class="mt-3"><input type="hidden" name="csrf" value="{{.CSRF}}"><button class="text-xs text-gray-400 underline">Cancel pending login</button></form>
+    {{else}}
+      <p class="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-200">Set TG_API_ID, TG_API_HASH and TG_CHAT_ID in the hosting environment, then restart the server to enable MTProto login and remote backups.</p>
+    {{end}}
+  </section>
+  <section class="rounded-xl border border-gray-700 bg-gray-800 p-4 sm:p-5">
+    <h3 class="mb-2 text-lg font-bold text-blue-300">Local backup files</h3><p class="mb-3 text-xs text-gray-400">Directory: {{.Data.BackupDir}} · Latest 20 compressed local snapshots</p>
+    {{if .Data.BackupAvailable}}<form method="post" action="/admin/server/backup" class="mb-4"><input type="hidden" name="csrf" value="{{.CSRF}}"><button type="submit" data-confirm="Create a database snapshot and upload it to Telegram if configured?" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50" {{if .Data.BackupRunning}}disabled{{end}}>{{if .Data.BackupRunning}}Backup running...{{else}}Create backup now{{end}}</button></form>{{end}}
+    {{if .Data.LastBackupFile}}<p class="mb-2 text-xs text-green-300">Last successful snapshot: {{.Data.LastBackupFile}}</p>{{end}}
+    {{if .Data.LastBackupError}}<p class="mb-2 text-xs text-red-300">Last backup failed. Check server logs.</p>{{end}}
+    {{range .Data.Backups}}<div class="flex items-center justify-between gap-3 border-t border-gray-700 py-2"><span class="break-all text-sm text-white">{{.Name}}</span><span class="flex shrink-0 items-center gap-3"><span class="text-xs text-gray-400">{{.Size}} bytes</span><a class="text-xs font-semibold text-blue-300 hover:text-blue-200" href="/admin/server/backups/{{urlquery .Name}}">Download</a></span></div>{{else}}<p class="rounded-lg border border-gray-700 p-4 text-center text-sm text-gray-500">No local backup files found.</p>{{end}}
+  </section>
+  <section class="rounded-xl border border-red-700/50 bg-gray-800 p-4 sm:p-5">
+    <h3 class="mb-2 text-lg font-bold text-red-300">Restore database backup</h3>
+    <p class="mb-3 text-sm text-gray-300">Upload a MoveX .db.gz snapshot. The live database is not changed now. The archive is fully checked and restored before SQLite opens on the next server restart. Keep the hosting DATA_DIR persistent.</p>
+    {{if .Data.PendingRestore}}
+      <p class="mb-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-200">A restore archive is pending. The next server start will validate it and apply it. If validation fails, startup will stop and the current database will remain untouched.</p>
+      <form method="post" action="/admin/server/restore/cancel"><input type="hidden" name="csrf" value="{{.CSRF}}"><button type="submit" data-confirm="Cancel the pending database restore?" class="rounded bg-gray-700 px-3 py-2 text-xs font-semibold text-white">Cancel pending restore</button></form>
+    {{else}}
+      <form method="post" enctype="multipart/form-data" action="/admin/server/restore" class="space-y-3">
+        <input type="hidden" name="csrf" value="{{.CSRF}}">
+        <label class="block text-xs text-gray-300">Backup archive (.db.gz)<input class="mt-1 block w-full text-sm text-gray-200" type="file" name="archive" accept=".gz,application/gzip" required></label>
+        <label class="block text-xs text-gray-300">Type RESTORE to confirm<input class="mt-1 w-full rounded bg-gray-900 px-3 py-2 text-sm text-white" name="confirmation" autocomplete="off" required></label>
+        <button type="submit" data-confirm="Stage this backup? It will replace the database at the next server restart." class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white">Stage restore for next restart</button>
+      </form>
+    {{end}}
+  </section>
+  <p class="text-xs text-gray-500">Environment values are controlled by deployment settings. Change them in your hosting provider, then restart the service.</p>
+</div>
+{{end}}

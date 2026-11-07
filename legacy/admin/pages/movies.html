@@ -1,0 +1,210 @@
+<div id="movies" class="admin-page fade-in">
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-lg">
+            <i class="fas fa-cloud-upload-alt text-blue-400 text-lg"></i>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 tracking-wide">Upload / Edit Content</h2>
+    </div>
+
+    <div class="bg-gray-800 p-6 sm:p-8 rounded-2xl border border-gray-700 mb-8 shadow-2xl relative overflow-hidden">
+        <!-- Premium Background Glow -->
+        <div class="absolute top-[-10%] left-[-10%] w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-purple-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <form id="movie-form" class="space-y-6 relative z-10">
+            <input type="hidden" id="movie-edit-id">
+
+            <!-- Premium Content Type Selection (Radio hidden, UI custom) -->
+            <div class="bg-gray-900/50 p-1.5 rounded-xl border border-gray-700/50 inline-flex w-full sm:w-auto shadow-inner">
+                <label class="flex-1 sm:flex-none text-center relative cursor-pointer group">
+                    <input type="radio" name="content-type" value="movie" class="peer sr-only" checked onchange="toggleContentType()">
+                    <div class="px-6 py-2.5 rounded-lg text-sm font-bold text-gray-400 peer-checked:bg-gradient-to-r peer-checked:from-blue-600 peer-checked:to-blue-500 peer-checked:text-white peer-checked:shadow-lg transition-all">
+                        <i class="fas fa-film mr-2"></i>Single Movie
+                    </div>
+                </label>
+                <label class="flex-1 sm:flex-none text-center relative cursor-pointer group">
+                    <input type="radio" name="content-type" value="series" class="peer sr-only" onchange="toggleContentType()">
+                    <div class="px-6 py-2.5 rounded-lg text-sm font-bold text-gray-400 peer-checked:bg-gradient-to-r peer-checked:from-purple-600 peer-checked:to-purple-500 peer-checked:text-white peer-checked:shadow-lg transition-all">
+                        <i class="fas fa-tv mr-2"></i>TV Series
+                    </div>
+                </label>
+            </div>
+
+            <!-- Content Title -->
+            <div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-heading text-blue-400 mr-2 text-xs"></i>Content Title</label>
+                <input type="text" id="movie-title" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all shadow-inner placeholder-gray-600" placeholder="e.g. Inception, Stranger Things..." required>
+            </div>
+
+            <!-- Private & Upcoming Checkboxes -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Private Content -->
+                <div class="bg-gray-900/40 p-4 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-colors group cursor-pointer shadow-sm">
+                    <label class="flex items-start gap-3 cursor-pointer w-full">
+                        <input type="checkbox" id="movie-is-private" class="mt-1 w-5 h-5 rounded bg-gray-800 border-gray-600 text-purple-600 focus:ring-purple-600 focus:ring-offset-gray-900 transition-all cursor-pointer">
+                        <div>
+                            <p class="text-white text-sm font-bold group-hover:text-purple-300 transition-colors">Mark as Private</p>
+                            <p class="text-xs text-gray-400 mt-0.5">Hidden from normal user panel</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Upcoming Content -->
+                <div class="bg-gray-900/40 p-4 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors group cursor-pointer shadow-sm">
+                    <label class="flex items-start gap-3 cursor-pointer w-full">
+                        <input type="checkbox" id="movie-is-upcoming" class="mt-1 w-5 h-5 rounded bg-gray-800 border-gray-600 text-blue-600 focus:ring-blue-600 focus:ring-offset-gray-900 transition-all cursor-pointer">
+                        <div>
+                            <p class="text-white text-sm font-bold group-hover:text-blue-300 transition-colors">Mark as Upcoming</p>
+                            <p class="text-xs text-gray-400 mt-0.5">Auto-publish on specific date</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Release Date Container -->
+            <div id="release-date-container" class="hidden bg-blue-900/10 p-5 rounded-xl border border-blue-500/30 relative overflow-hidden">
+                <div class="absolute left-0 top-0 w-1 h-full bg-blue-500"></div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-calendar-alt text-blue-400 mr-2 text-xs"></i>Release Date & Time</label>
+                <input type="datetime-local" id="movie-release-date" class="w-full bg-gray-900/80 text-white p-3.5 rounded-xl border border-blue-500/30 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all shadow-inner">
+                <p class="text-xs text-blue-300/70 mt-2 font-medium"><i class="fas fa-info-circle mr-1"></i>Content becomes public automatically at this exact time.</p>
+            </div>
+
+            <!-- Year & Rating -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-calendar text-emerald-400 mr-2 text-xs"></i>Release Year</label>
+                    <input type="number" id="movie-year" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all placeholder-gray-600 shadow-inner" placeholder="e.g. 2024" required>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-star text-amber-400 mr-2 text-xs"></i>IMDb Rating</label>
+                    <input type="text" id="movie-rating" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none transition-all placeholder-gray-600 shadow-inner" placeholder="e.g. 8.5">
+                </div>
+            </div>
+
+            <!-- Poster URL -->
+            <div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-image text-pink-400 mr-2 text-xs"></i>Poster Image URL</label>
+                <input type="text" id="movie-poster" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 outline-none transition-all placeholder-gray-600 shadow-inner" placeholder="https://..." required>
+            </div>
+
+            <!-- Cover (wide) image: shown at the top of the player before playing -->
+            <div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-panorama text-pink-400 mr-2 text-xs"></i>Cover Image URL (wide, optional)</label>
+                <p class="text-[10px] text-gray-500 mb-2 font-medium">Landscape image (16:9). If empty, the poster is used.</p>
+                <input type="text" id="movie-cover" class="w-full bg-gray-900/80 text-white p-3.5 rounded-xl border border-gray-700 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 outline-none transition-all placeholder-gray-600 shadow-inner" placeholder="https://...">
+            </div>
+
+            <!-- SINGLE MOVIE LINKS -->
+            <div id="single-movie-links" class="bg-blue-900/10 p-5 rounded-xl border border-blue-500/30 relative">
+                <h4 class="text-sm text-blue-400 font-bold mb-4 uppercase tracking-wider flex items-center"><i class="fas fa-link mr-2"></i>Video Link</h4>
+                <div>
+                    <label class="block text-gray-400 text-xs font-semibold mb-1 uppercase tracking-wide">Video Link</label>
+                    <p class="text-[10px] text-gray-500 mb-2 font-medium">Supports: MP4, WebM, HLS (.m3u8), YouTube, Vimeo, embed links. Use https:// links.</p>
+                    <input type="text" id="movie-server1" class="w-full bg-gray-900/80 text-white p-3.5 rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-gray-600 shadow-inner" placeholder="https://...">
+                    <p class="http-warn hidden text-[11px] text-amber-400 mt-2"><i class="fas fa-exclamation-triangle mr-1"></i>This link starts with http:// and may not play on the https site.</p>
+                </div>
+            </div>
+
+            <!-- SERIES MANAGER -->
+            <div id="series-manager" class="hidden bg-purple-900/10 p-5 rounded-xl border border-purple-500/40 relative">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 gap-3">
+                    <h4 class="text-sm text-purple-400 font-bold uppercase tracking-wider flex items-center"><i class="fas fa-layer-group mr-2"></i>Seasons & Episodes Manager</h4>
+                    <button type="button" onclick="addSeasonUI()" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-lg shadow-purple-600/30 transition-all transform hover:-translate-y-0.5 w-full sm:w-auto"><i class="fas fa-plus mr-1.5"></i> Add Season</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Season List -->
+                    <div class="bg-gray-900/60 p-4 rounded-xl border border-gray-700/50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold text-gray-300 uppercase tracking-widest"><i class="fas fa-folder text-purple-400 mr-1.5"></i>Seasons</span>
+                            <button type="button" onclick="deleteCurrentSeason()" class="text-[10px] bg-red-500/10 hover:bg-red-500 hover:text-white text-red-400 px-2.5 py-1.5 rounded uppercase font-bold transition-all"><i class="fas fa-trash mr-1"></i>Del</button>
+                        </div>
+                        <div id="season-list" class="picker-list bg-gray-800/80 rounded-lg border border-gray-700 shadow-inner"></div>
+                    </div>
+                    <!-- Episode List -->
+                    <div class="bg-gray-900/60 p-4 rounded-xl border border-gray-700/50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold text-gray-300 uppercase tracking-widest"><i class="fas fa-play-circle text-purple-400 mr-1.5"></i>Episodes</span>
+                            <div class="flex gap-1.5">
+                                <button type="button" onclick="addEpisodeUI()" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1.5 rounded uppercase font-bold transition-all"><i class="fas fa-plus"></i></button>
+                                <button type="button" onclick="bulkAddEpisodesUI()" class="text-[10px] bg-purple-600 hover:bg-purple-500 text-white px-2.5 py-1.5 rounded uppercase font-bold transition-all"><i class="fas fa-layer-group mr-1"></i>Bulk</button>
+                            </div>
+                        </div>
+                        <div id="episode-list" class="picker-list bg-gray-800/80 rounded-lg border border-gray-700 shadow-inner"></div>
+                    </div>
+                </div>
+
+                <!-- Edit Panel for Selected Episode -->
+                <div id="episode-edit-panel" class="edit-panel hidden mt-5 bg-gray-900/80 border-purple-500/30 shadow-2xl relative overflow-hidden">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-purple-500"></div>
+                    <h5 class="text-sm font-bold text-gray-200 mb-4 ml-2"><i class="fas fa-edit text-purple-400 mr-2"></i>Edit Episode</h5>
+                    <div class="space-y-4 ml-2">
+                        <div>
+                            <label class="block text-gray-400 text-[11px] font-semibold mb-1 uppercase tracking-wide">Video Link</label>
+                            <p class="text-[9px] text-gray-500 mb-2 font-medium">MP4, WebM, HLS (.m3u8), YouTube, Vimeo, embed. Use https://</p>
+                            <input type="text" id="edit-ep-server1" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-600 focus:border-purple-500 outline-none transition-all placeholder-gray-500 shadow-inner" placeholder="URL...">
+                            <p class="http-warn hidden text-[10px] text-amber-400 mt-1"><i class="fas fa-exclamation-triangle mr-1"></i>http:// link may not play on the https site.</p>
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <button type="button" onclick="saveEpisodeEdit()" class="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-2.5 rounded-lg text-sm font-bold shadow-lg transition-all"><i class="fas fa-save mr-1.5"></i>Save Info</button>
+                            <button type="button" onclick="deleteCurrentEpisode()" class="flex-1 bg-gray-700 hover:bg-red-600 text-white py-2.5 rounded-lg text-sm font-bold shadow-lg transition-all"><i class="fas fa-trash mr-1.5"></i>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classification -->
+            <div class="rounded-2xl border border-gray-700 bg-gray-900/30 p-4 space-y-4" id="mx-classification">
+                <h4 class="text-sm font-bold text-cyan-400 uppercase tracking-widest"><i class="fas fa-tags mr-2"></i>Classification</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 text-sm font-semibold mb-2">Type</label>
+                        <select id="movie-type" class="w-full bg-gray-900/50 text-white p-3 rounded-xl border border-gray-700 outline-none"></select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-sm font-semibold mb-2">Industry / Country</label>
+                        <select id="movie-industry" class="w-full bg-gray-900/50 text-white p-3 rounded-xl border border-gray-700 outline-none"></select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-sm font-semibold mb-2">Language (audio)</label>
+                    <div id="mx-langs" class="flex flex-wrap gap-2"></div>
+                    <label class="inline-flex items-center gap-2 mt-3 text-sm text-gray-300 cursor-pointer"><input type="checkbox" id="movie-dubbed"> Dubbed version</label>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-gray-300 text-sm font-semibold">Genres <span class="text-xs text-gray-500">(pick one or more)</span></label>
+                        <button type="button" id="mx-gclear" class="text-xs text-gray-400 hover:text-white">Clear</button>
+                    </div>
+                    <div id="mx-gsel" class="flex flex-wrap gap-2 mb-2"></div>
+                    <p class="text-[11px] text-gray-500 mb-1">Popular</p>
+                    <div id="mx-gpop" class="flex flex-wrap gap-2 mb-3"></div>
+                    <input id="mx-gsearch" type="text" autocomplete="off" placeholder="Search genres… (Enter adds the first match)" class="w-full bg-gray-900/50 text-white p-3 rounded-xl border border-gray-700 outline-none mb-2">
+                    <div id="mx-glist" class="mx-glist"></div>
+                </div>
+            </div>
+
+            <!-- Cast -->
+            <div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-users text-orange-400 mr-2 text-xs"></i>Cast / Crew</label>
+                <textarea id="movie-cast" rows="3" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all placeholder-gray-600 resize-y shadow-inner" placeholder="Actor names, director..."></textarea>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block text-gray-300 text-sm font-semibold mb-2 tracking-wide"><i class="fas fa-align-left text-gray-400 mr-2 text-xs"></i>Description / Storyline</label>
+                <textarea id="movie-description" rows="6" class="w-full bg-gray-900/50 text-white p-3.5 rounded-xl border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder-gray-600 resize-y shadow-inner" placeholder="Write a brief description... (Line breaks supported)"></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 pt-4 mt-6 border-t border-gray-700/50">
+                <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white py-4 rounded-xl font-bold text-lg shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-all transform hover:-translate-y-0.5 active:scale-95">
+                    <i class="fas fa-paper-plane mr-2"></i>Publish Content
+                </button>
+                <button type="button" id="movie-form-cancel" class="hidden sm:w-1/3 bg-gray-700 hover:bg-gray-600 text-white py-4 rounded-xl font-bold transition-all shadow-lg">
+                    Cancel Edit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

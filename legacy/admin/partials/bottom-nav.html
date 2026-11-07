@@ -1,0 +1,30 @@
+<!-- Bottom Navigation Bar (Updated with Users button) -->
+<nav class="fixed bottom-0 w-full bg-gray-900/80 backdrop-blur-xl border-t border-gray-700/50 h-20 shadow-2xl z-50">
+    <div class="flex justify-around items-center h-full max-w-4xl mx-auto px-1">
+        <button data-page="dashboard" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-blue-500 transition-colors">
+            <i class="fas fa-tachometer-alt text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Home</span>
+        </button>
+        <button data-page="movies" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-200 transition-colors">
+            <i class="fas fa-cloud-upload-alt text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Upload</span>
+        </button>
+        <button data-page="all-movies" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-200 transition-colors">
+            <i class="fas fa-list text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Content</span>
+        </button>
+        <button data-page="banners" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-200 transition-colors">
+            <i class="fas fa-images text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Banner</span>
+        </button>
+        <!-- NEW: Users button -->
+        <button data-page="users" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-200 transition-colors">
+            <i class="fas fa-users text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Users</span>
+        </button>
+        <button data-page="settings" class="admin-nav-btn flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-200 transition-colors">
+            <i class="fas fa-cog text-xl mb-1"></i>
+            <span class="text-[10px] font-medium uppercase">Settings</span>
+        </button>
+    </div>
+</nav>

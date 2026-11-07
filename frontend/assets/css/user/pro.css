@@ -1,0 +1,132 @@
+/* ===== NETFLIX-STYLE THEME (visual only; red is default accent, admin can change --accent) ===== */
+:root{--nf:var(--accent,#e50914);--bg:#141414;--bg0:#000;--card:#181818;--line:rgba(255,255,255,.1)}
+html,body{background:var(--bg)!important;color:#fff;font-family:'Roboto','Helvetica Neue',Arial,sans-serif!important}
+*{transition-property:transform,opacity,box-shadow,border-color,background-color!important}
+#app-container{max-width:90rem!important;background:var(--bg)}
+.global-blob,.global-glass-overlay,.splash-glass-blob,.splash-glass-overlay{display:none!important}
+.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{scrollbar-width:none}
+.nf-empty{color:#777;text-align:center;padding:40px 0}
+
+/* Header */
+#global-header{max-width:none!important;background:linear-gradient(to bottom,rgba(0,0,0,.85),transparent)!important;border:0!important;box-shadow:none!important;transition:background-color .3s!important}
+#global-header.solid{background:var(--bg0)!important}
+.nf-wordmark{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--nf);font-weight:900;font-size:26px;letter-spacing:.02em;text-transform:uppercase;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.nf-hbtn{color:#fff;font-size:18px;width:32px;height:32px}
+.nf-avatar{width:30px;height:30px;border-radius:4px;background:var(--nf);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center}
+.main-content{padding-top:0!important;padding-bottom:78px}
+.page.p-4{padding-top:70px}
+
+/* Hero */
+.hero{position:relative;height:min(62vh,480px);margin:0 0 -40px;overflow:hidden;z-index:1}
+.hero-track{position:absolute;inset:0}
+.hero-slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .8s ease!important}
+.hero-slide.on{opacity:1;pointer-events:auto}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 2%,rgba(20,20,20,.35) 40%,rgba(0,0,0,.35) 75%,rgba(0,0,0,.7)),linear-gradient(to right,rgba(0,0,0,.7),transparent 60%)}
+.hero-info{position:absolute;left:20px;right:20px;bottom:70px;z-index:2;max-width:560px}
+.hero-tag{display:inline-block;color:var(--nf);font-size:12px;font-weight:700;letter-spacing:.25em;text-transform:uppercase}
+.hero-title{font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;line-height:1.05;margin:8px 0;text-shadow:2px 2px 10px #000}
+.hero-meta{font-size:13px;color:#d2d2d2;display:flex;gap:12px;align-items:center}
+.hero-desc{font-size:14px;color:#e5e5e5;margin-top:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-shadow:1px 1px 4px #000}
+.hero-actions{display:flex;gap:10px;margin-top:16px}
+.hero-btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;background:#fff;color:#000;font-weight:700;font-size:15px;padding:9px 24px;border-radius:4px}
+.hero-btn.ghost{background:rgba(109,109,110,.7);color:#fff}
+.hero-btn:hover{opacity:.85}
+.hero-dots{position:absolute;right:20px;bottom:76px;z-index:3;display:flex;gap:6px}
+.hero-dots i{width:18px;height:3px;background:rgba(255,255,255,.4);cursor:pointer}
+.hero-dots i.on{background:var(--nf)}
+.nf-chips{position:absolute;top:62px;left:16px;z-index:5;display:flex;gap:8px;overflow-x:auto}
+.nf-chips button{border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.4);color:#fff;border-radius:999px;font-size:13px;padding:5px 14px;white-space:nowrap}
+.nf-chips button.on{background:#fff;color:#000;border-color:#fff}
+
+/* Rows & cards */
+.nf-row{margin-bottom:26px;position:relative;z-index:2}
+.nf-rt{font-size:18px;font-weight:700;color:#e5e5e5;margin:0 0 10px;cursor:pointer}
+.nf-rt i{font-size:11px;color:var(--nf);opacity:0;margin-left:6px}.nf-rt:hover i{opacity:1}
+.nf-strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 0 24px}
+.nf-card{flex:0 0 auto;width:108px;cursor:pointer;scroll-snap-align:start;position:relative}
+.nf-poster{position:relative;aspect-ratio:2/3;border-radius:4px;overflow:hidden;background:#222}
+.nf-poster img{width:100%;height:100%;object-fit:cover}
+.nf-badge{position:absolute;top:6px;left:6px;background:var(--nf);color:#fff;font-size:8px;font-weight:700;padding:2px 5px;border-radius:2px;letter-spacing:.08em}
+.nf-soon{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:10px;font-weight:700;padding:14px 0 6px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
+.nf-hover{display:none}
+.nf-top{width:150px;padding-left:44px}
+.nf-rank{position:absolute;left:-2px;bottom:-6px;font-size:110px;font-weight:900;line-height:1;color:#000;-webkit-text-stroke:3px #595959;z-index:0;letter-spacing:-.08em}
+.nf-top .nf-poster{position:relative;z-index:1}
+@media(min-width:768px){
+  .nf-card{width:190px}.nf-top{width:250px;padding-left:80px}.nf-rank{font-size:170px}
+  #movie-carousels-container{padding:0 48px!important}
+  .nf-chips{left:48px;top:76px}.hero-info{left:48px;bottom:90px}.hero-dots{right:48px}
+  .nf-card{transition:transform .25s!important}
+  .nf-card:hover{transform:scale(1.35);z-index:20}
+  .nf-card:hover .nf-poster{box-shadow:0 12px 30px rgba(0,0,0,.8)}
+  .nf-card:hover .nf-hover{display:block;position:absolute;left:0;right:0;bottom:0;padding:34px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.95) 55%)}
+  .nf-play{width:26px;height:26px;border-radius:50%;background:#fff;color:#000;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .nf-ht{font-size:12px;font-weight:700;margin-top:6px}.nf-hm{font-size:10px;color:#bcbcbc;margin-top:2px}.nf-hm i{color:#facc15}
+}
+.nf-strip{padding-top:30px;margin-top:-26px}
+
+/* Nav: flat bar on mobile, top links on desktop */
+nav.fixed.bottom-0{max-width:none!important;left:0!important;right:0!important;height:60px!important;background:var(--bg0)!important;border-top:1px solid #222!important;backdrop-filter:none!important;border-radius:0}
+nav.fixed.bottom-0 i{font-size:19px!important}
+nav.fixed.bottom-0 .text-xs{font-size:10px!important;margin-top:3px}
+nav.fixed.bottom-0 .nav-btn{color:#8c8c8c!important}
+nav.fixed.bottom-0 .nav-btn.text-blue-500,nav.fixed.bottom-0 .nav-btn.active{color:#fff!important}
+@media(min-width:768px){
+  nav.fixed.bottom-0{top:0;bottom:auto!important;left:var(--nav-left,200px)!important;right:150px!important;height:56px!important;background:transparent!important;border:0!important;z-index:55}
+  nav.fixed.bottom-0>div{justify-content:flex-start!important;gap:6px}
+  nav.fixed.bottom-0 .nav-btn{flex-direction:row!important;gap:0;padding:0 14px}
+  nav.fixed.bottom-0 i{display:none}
+  nav.fixed.bottom-0 .text-xs{font-size:14px!important;margin:0}
+  .main-content{padding-bottom:20px}
+}
+
+
+/* Profile: My-Netflix look */
+#profile-page{background:var(--bg)!important}
+#profile-page [class*="blur-[1"]{display:none}
+#profile-page h2{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important}
+#profile-page .rounded-full.w-28{border-radius:8px!important;background:var(--nf)!important;border:0!important}
+#profile-page #profile-initial{-webkit-text-fill-color:#fff!important;color:#fff!important;background:none!important}
+#profile-page .bg-slate-800\/50,#profile-page .bg-slate-900\/60,#profile-page .bg-slate-800\/60{background:var(--card)!important;border-color:#2a2a2a!important;border-radius:6px!important}
+#profile-page [class*="from-indigo-600"]{background:var(--nf)!important;box-shadow:none!important}
+#profile-page button[onclick="handleLogout()"]{background:#2a2a2a!important;color:#fff!important;border:0!important;border-radius:4px!important}
+
+/* Splash: intro */
+.splash-screen{background:#000!important}
+.splash-logo-container,.splash-subtitle,.splash-footer{display:none!important}
+.splash-title{color:var(--nf)!important;-webkit-text-fill-color:var(--nf)!important;background:none!important;font-size:clamp(2.6rem,12vw,5rem)!important;font-weight:900!important;text-transform:uppercase;letter-spacing:.04em;animation:nfZoom 1.6s ease-out both,nfGlow 2s ease-in-out infinite alternate}
+.splash-loader .dot{display:none!important}
+.splash-loader{width:160px;height:3px;background:#222;margin-top:34px;overflow:hidden;border-radius:2px;position:relative}
+.splash-loader::after{content:"";position:absolute;inset:0;width:40%;background:var(--nf);animation:nfBar 1.1s ease-in-out infinite}
+@keyframes nfZoom{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes nfGlow{from{text-shadow:0 0 10px rgba(229,9,20,.25)}to{text-shadow:0 0 38px rgba(229,9,20,.85)}}
+@keyframes nfBar{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+
+/* Auth */
+#auth-screen{background:#000!important}
+.auth-card{background:rgba(0,0,0,.78)!important;border:0!important;border-radius:6px!important;box-shadow:none!important;max-width:26rem}
+.auth-card input{background:#333!important;border:0!important;border-radius:4px!important;color:#fff!important;padding-top:.85rem!important;padding-bottom:.85rem!important}
+.auth-card input:focus{outline:2px solid #fff}
+.auth-card button[type="submit"]{background:var(--nf)!important;border-radius:4px!important;font-weight:700}
+.auth-card .text-blue-400{color:#b3b3b3!important}
+
+/* Skeletons */
+.skeleton{background:#2a2a2a!important}
+
+/* Search */
+#search-page{padding-top:70px}
+.ts-title{font-size:20px;font-weight:700;margin-bottom:10px}
+.ts-row{display:flex;align-items:center;gap:12px;background:#2a2a2a;margin-bottom:3px;cursor:pointer}
+.ts-row img{width:90px;height:56px;object-fit:cover;object-position:top}
+.ts-name{flex:1;font-size:15px;font-weight:500;padding:0 4px}
+.ts-play{width:34px;height:34px;border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;margin-right:12px}
+#search-page input{background:#333!important}
+
+/* Refresh (not first visit): no splash intro, just a quiet dark screen with a thin red loading line */
+#initial-loader.quiet{background:#141414!important}
+#initial-loader.quiet>*{display:none!important}
+#initial-loader.quiet::after{content:"";position:fixed;top:0;left:0;height:3px;width:35%;background:var(--nf,#e50914);animation:nfTop 1.1s ease-in-out infinite}
+@keyframes nfTop{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
+
+@media(min-width:768px){.hero{height:min(64vh,540px)}.hero-info{max-height:calc(100% - 150px);overflow:hidden}}

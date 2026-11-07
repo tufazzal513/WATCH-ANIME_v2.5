@@ -1,0 +1,7 @@
+/* Admin Sidebar Styles */
+.sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.sidebar-overlay.active { opacity: 1; visibility: visible; }
+.admin-sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: #111827; z-index: 101; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 10px 0 30px rgba(0,0,0,0.5); border-right: 1px solid #374151; display: flex; flex-direction: column; }
+.admin-sidebar.active { transform: translateX(0); }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 16px 20px; color: #9ca3af; font-weight: 500; transition: all 0.2s; border-left: 3px solid transparent; cursor: pointer; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(37,99,235,0.1); color: #fff; border-left-color: #3b82f6; }

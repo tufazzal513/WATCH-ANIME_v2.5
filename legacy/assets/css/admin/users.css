@@ -1,0 +1,12 @@
+/* User select specific overrides */
+.user-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: rgba(31, 41, 55, 0.6);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #374151;
+}
+/* User avatar style */
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: #374151; }

@@ -1,0 +1,156 @@
+<div id="settings" class="admin-page fade-in">
+    <h2 class="text-2xl font-bold mb-6">Settings</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
+        <button type="button" onclick="logout()" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-bold">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+        </button>
+    </div>
+
+    <!-- Server settings (what used to be environment variables) -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-amber-500/40 mb-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-1 text-amber-400"><i class="fas fa-sliders-h mr-2"></i>Server Settings</h3>
+        <p class="text-xs text-gray-400 mb-4">Change the main server's settings here instead of editing environment variables. Saved values override the host's variables and apply <b>immediately</b> (no restart). Secrets are write-only: once saved they are never shown again.</p>
+        <div id="cfg-box" class="space-y-5"><p class="text-xs text-gray-500">Loading...</p></div>
+        <div class="flex flex-wrap gap-2 mt-5">
+            <button type="button" id="cfg-save" class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold"><i class="fas fa-save mr-2"></i>Save settings</button>
+            <button type="button" id="cfg-test" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white text-sm font-bold"><i class="fab fa-telegram-plane mr-2"></i>Test Telegram</button>
+        </div>
+        <p id="cfg-msg" class="text-xs mt-3"></p>
+        <p class="text-[11px] text-gray-500 mt-3">Starting a brand-new server from a Telegram backup? Set the Telegram variables (bot token + channel, or API ID/hash + session) on that host once; everything else here comes back with the restored backup.</p>
+    </div>
+
+    <!-- Servers & Backup -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-emerald-500/40 mb-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-1 text-emerald-400"><i class="fas fa-server mr-2"></i>Servers &amp; Backup</h3>
+        <p id="srv-summary" class="text-xs text-gray-400 mb-4">Loading...</p>
+
+        <div class="flex flex-wrap gap-2 mb-2">
+            <button type="button" id="bk-run" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold"><i class="fab fa-telegram-plane mr-2"></i>Backup now</button>
+            <button type="button" id="bk-dl" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-white text-sm font-bold"><i class="fas fa-download mr-2"></i>Download .db.gz</button>
+        </div>
+        <p id="bk-status" class="text-xs text-gray-400 mb-5"></p>
+
+        <h4 class="text-sm font-bold text-gray-200 mb-2">Worker servers</h4>
+        <div id="wk-list" class="space-y-2 mb-3"></div>
+        <form id="wk-form" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <input id="wk-name" type="text" placeholder="Worker name (e.g. worker-1)" class="bg-gray-700 text-white p-2 rounded-lg border border-gray-600 outline-none text-sm">
+            <input id="wk-url" type="text" placeholder="https://worker-1.botkeep.cloud" class="bg-gray-700 text-white p-2 rounded-lg border border-gray-600 outline-none text-sm">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white text-sm py-2">Add worker</button>
+        </form>
+        <pre id="wk-new" class="hidden mt-3 p-3 bg-black/40 rounded-lg text-[11px] text-emerald-300 whitespace-pre-wrap break-all select-all"></pre>
+    </div>
+
+    <!-- App Details Settings -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 mb-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-4 text-blue-400"><i class="fas fa-tv mr-2"></i>App Details</h3>
+        <form id="app-details-form" class="space-y-4">
+            <div>
+                <label class="block text-gray-400 text-sm font-medium mb-1">Application Name</label>
+                <input id="app-name-input" type="text" placeholder="E.g. MoveX" class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none">
+            </div>
+            <div>
+                <label class="block text-gray-400 text-sm font-medium mb-1">Website Logo URL</label>
+                <input id="app-logo-input" type="text" placeholder="https://... (Image URL)" class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none">
+                <p class="text-[10px] text-gray-500 mt-1">This logo will be shown on the User Panel loading screen.</p>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-bold text-white transition-colors shadow-lg">Save Details</button>
+        </form>
+    </div>
+
+    <!-- Dynamic Theme Settings -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-purple-500/40 mb-6 shadow-lg relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h3 class="text-lg font-bold mb-4 text-purple-400"><i class="fas fa-palette mr-2"></i>Dynamic App Theme</h3>
+        <form id="theme-settings-form" class="space-y-4 relative z-10">
+            <div class="flex gap-4">
+                <label class="flex-1 bg-gray-900/60 p-3 rounded-xl border border-gray-700 cursor-pointer hover:border-purple-500/50 transition-colors">
+                    <input type="radio" name="theme-mode" value="static" class="mr-2 accent-purple-500"> 
+                    <span class="text-sm font-bold text-gray-200">Static Color</span>
+                </label>
+                <label class="flex-1 bg-gray-900/60 p-3 rounded-xl border border-gray-700 cursor-pointer hover:border-purple-500/50 transition-colors">
+                    <input type="radio" name="theme-mode" value="auto" class="mr-2 accent-purple-500"> 
+                    <span class="text-sm font-bold text-gray-200">Auto Rotate Mode</span>
+                </label>
+            </div>
+
+            <!-- Static Mode Box -->
+            <div id="theme-static-box" class="bg-gray-900/40 p-4 rounded-xl border border-gray-700/50 flex items-center justify-between">
+                <div>
+                    <label class="block text-gray-300 text-sm font-semibold mb-1">Select Primary Color</label>
+                    <p class="text-[10px] text-gray-500">App will permanently use this color.</p>
+                </div>
+                <input type="color" id="theme-color-picker" value="#2563eb" class="w-14 h-14 rounded-xl cursor-pointer bg-transparent border-0 outline-none p-0">
+            </div>
+
+            <!-- Auto Mode Box -->
+            <div id="theme-auto-box" class="hidden bg-gray-900/40 p-4 rounded-xl border border-gray-700/50">
+                <label class="block text-gray-300 text-sm font-semibold mb-1">Color Change Interval (Minutes)</label>
+                <input type="number" id="theme-interval-input" placeholder="e.g. 60" min="1" class="w-full bg-gray-800 text-white p-3 rounded-lg border border-gray-600 focus:border-purple-500 outline-none shadow-inner">
+                <p class="text-[10px] text-gray-500 mt-2">App will automatically cycle through premium colors globally every X minutes.</p>
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 py-3 rounded-xl font-bold text-white transition-all shadow-[0_4px_15px_rgba(147,51,234,0.3)] transform active:scale-95">
+                Update Theme Settings
+            </button>
+        </form>
+    </div>
+
+    <!-- Password Reset Settings -->
+    <div class="bg-gray-800 p-5 rounded-xl border border-emerald-600/40 mb-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-4 text-emerald-400"><i class="fas fa-key mr-2"></i>Password Reset Limit</h3>
+        <form id="pwd-reset-form" class="space-y-4">
+            <div>
+                <label class="block text-gray-400 text-sm font-medium mb-1">Reset Limit (Per 24 Hours)</label>
+                <input id="pwd-limit-input" type="number" min="1" placeholder="e.g. 3" class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-emerald-500 outline-none">
+                <p class="text-[10px] text-gray-500 mt-1">Maximum number of times a user can request a password reset email within 24 hours.</p>
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 py-2 rounded-lg font-bold text-white transition-colors">Save Reset Limit</button>
+        </form>
+    </div>
+
+    <!-- Socials -->
+    <div id="social-section" class="bg-gray-800 p-5 rounded-xl border border-gray-700 mb-6 shadow-lg">
+        <h3 class="text-lg font-bold mb-4 text-blue-400">Social Media Links</h3>
+        <form id="social-form" class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4" data-edit-id="">
+            <input id="social-name" type="text" placeholder="Name (Facebook / Telegram)" class="bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none" required>
+            <input id="social-url" type="text" placeholder="URL" class="bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none" required>
+            <div class="flex gap-2">
+                <select id="social-icon-preset" class="flex-1 bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none">
+                    <option value="fas fa-link">Link</option>
+                    <option value="fab fa-facebook">Facebook</option>
+                    <option value="fab fa-youtube">YouTube</option>
+                    <option value="fab fa-telegram">Telegram</option>
+                    <option value="fab fa-instagram">Instagram</option>
+                    <option value="fab fa-tiktok">TikTok</option>
+                    <option value="fab fa-whatsapp">WhatsApp</option>
+                    <option value="fab fa-discord">Discord</option>
+                    <option value="fab fa-twitter">X / Twitter</option>
+                </select>
+                <div class="w-12 bg-gray-700 rounded-lg border border-gray-600 flex items-center justify-center">
+                    <i id="social-icon-preview" class="fas fa-link text-blue-400"></i>
+                </div>
+            </div>
+            <input id="social-icon" type="text" placeholder="Icon class (optional)" class="bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none">
+            <div class="col-span-1 md:col-span-4 flex gap-2">
+                <button type="submit" id="social-submit-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-bold text-white">Add Link</button>
+                <button type="button" id="social-cancel-btn" class="hidden px-4 py-2 rounded-lg font-bold bg-gray-700 hover:bg-gray-600 text-white">Cancel</button>
+            </div>
+        </form>
+        <div id="socials-list" class="space-y-2"></div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification-section" class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg">
+        <h3 class="text-lg font-bold mb-4 text-blue-400">Send Notification</h3>
+        <form id="notification-form" class="space-y-3 mb-4" data-edit-id="">
+            <input id="notif-title" type="text" placeholder="Title" class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none" required>
+            <textarea id="notif-message" placeholder="Message" rows="2" class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 outline-none" required></textarea>
+            <div class="flex gap-2">
+                <button type="submit" id="notif-submit-btn" class="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-bold text-white">Send</button>
+                <button type="button" id="notif-cancel-btn" class="hidden px-4 py-2 rounded-lg font-bold bg-gray-700 hover:bg-gray-600 text-white">Cancel</button>
+            </div>
+        </form>
+        <h4 class="text-sm text-gray-400 uppercase mb-2">Active Notifications</h4>
+        <div id="notifications-list" class="space-y-2"></div>
+    </div>
+</div>

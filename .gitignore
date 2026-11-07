@@ -1,0 +1,19 @@
+# secrets / runtime data
+.env
+backend/.env
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+*.session
+session.key
+# build output
+backend/movex
+backend/movex.exe
+*.test
+coverage.out
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+node_modules/

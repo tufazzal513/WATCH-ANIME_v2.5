@@ -1,0 +1,42 @@
+/* ================= BASE STYLES ================= */
+html, body { 
+    font-family: 'Poppins', sans-serif; 
+    overflow-x: hidden; 
+    width: 100%; 
+    position: relative; 
+    background-color: #0f172a; 
+    touch-action: pan-y; 
+}
+
+.no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+.no-scrollbar { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.main-content { 
+    padding-top: 48px; /* Space for the locked header */
+    padding-bottom: 80px; 
+    overflow-x: hidden; 
+}
+
+/* Class to dynamically remove padding when header is hidden */
+.no-global-header {
+    padding-top: 0 !important;
+}
+
+.page { 
+    display: none; 
+    background: transparent !important; 
+}
+.page.active { 
+    display: block; 
+    animation: fadeIn 0.3s ease-in-out; 
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; } 
+    to { opacity: 1; } 
+}

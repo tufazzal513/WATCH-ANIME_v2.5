@@ -1,0 +1,21 @@
+{
+  "name": "movex-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MoveX database server (SQLite). Core has no dependencies; the optional \"telegram\" package enables MTProto (big-file) Telegram backups. Firebase is used for Auth only.",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/index.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/server.test.js test/cluster.test.js",
+    "add-admin": "node --disable-warning=ExperimentalWarning scripts/add-admin.js",
+    "import": "node --disable-warning=ExperimentalWarning scripts/import-firebase-json.js",
+    "tg-login": "node --disable-warning=ExperimentalWarning scripts/tg-login.js"
+  },
+  "dependencies": {
+    "telegram": "^2.26.0"
+  }
+}

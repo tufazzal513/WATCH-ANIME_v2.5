@@ -1,0 +1,63 @@
+/* ================= 3D CAROUSEL STYLES ================= */
+.carousel-container {
+    perspective: 1000px;
+    width: 100%;
+    height: 280px;
+    position: relative;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible; 
+    touch-action: pan-y;
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-out;
+}
+
+.carousel-container:active .carousel { cursor: grabbing; }
+.carousel-container .carousel { cursor: grab; }
+
+.carousel__item {
+    position: absolute;
+    width: 140px;
+    height: 210px;
+    left: 50%;
+    top: 50%;
+    margin-left: -70px;
+    margin-top: -105px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #1e293b;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+}
+
+.carousel__item:hover {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+    border-color: #3b82f6;
+}
+
+@media(min-width: 768px) {
+    .carousel-container { height: 350px; }
+    .carousel__item {
+        width: 180px;
+        height: 270px;
+        margin-left: -90px;
+        margin-top: -135px;
+    }
+}

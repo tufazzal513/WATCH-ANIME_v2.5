@@ -1,0 +1,53 @@
+name: Deploy MoveX frontend to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Prepare static site
+        env:
+          MOVEX_API_BASE: ${{ vars.MOVEX_API_BASE }}
+        run: |
+          set -eu
+          mkdir -p _site
+          cp -R frontend/. _site/
+          API_BASE="${MOVEX_API_BASE:-}"
+          if [ -n "$API_BASE" ]; then
+            case "$API_BASE" in https://*) ;; *) echo 'MOVEX_API_BASE must start with https://' >&2; exit 1 ;; esac
+          fi
+          printf 'window.MX_CONFIG = { apiBase: %s };\n' "$(python3 -c 'import json,os; print(json.dumps(os.environ.get("MOVEX_API_BASE", "")))')" > _site/assets/js/shared/deploy-config.js
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

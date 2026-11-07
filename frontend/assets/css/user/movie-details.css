@@ -1,0 +1,18 @@
+/* AD Container Helper */
+
+/* Movie Details & Episode List Styles */
+@keyframes slowPan {
+    0% { transform: scale(1.05) translateY(0); }
+    100% { transform: scale(1.12) translateY(-2%); }
+}
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.5); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
+
+.ep-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
