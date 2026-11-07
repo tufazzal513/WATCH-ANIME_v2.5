@@ -1,0 +1,94 @@
+<div id="profile-page" class="page p-0 relative min-h-screen overflow-hidden bg-slate-900">
+    <!-- Premium Background Ambient Glows -->
+    <div class="absolute top-[0%] right-[-10%] w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="absolute bottom-[10%] left-[-10%] w-[300px] h-[300px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+    <!-- Sticky Premium Header -->
+    <div class="relative z-40 bg-slate-900/80 backdrop-blur-xl px-5 py-4 flex items-center border-b border-slate-700/50 shadow-lg">
+        <h2 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400 tracking-wide flex items-center gap-2">
+            <i class="fas fa-user-circle text-indigo-400"></i> My Account
+        </h2>
+    </div>
+
+    <div class="p-5 relative z-10 max-w-md mx-auto pt-8 pb-24">
+        <!-- Profile Avatar & Info -->
+        <div class="text-center animate-slide-up" style="animation-delay: 0.1s;">
+            <div class="relative inline-block group mb-3">
+                <!-- Outer glowing ring -->
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
+
+                <!-- Avatar Circle -->
+                <div class="relative w-28 h-28 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full mx-auto flex items-center justify-center shadow-2xl border-2 border-slate-700 group-hover:border-indigo-500 transition-colors duration-300 z-10">
+                    <span id="profile-initial" class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-400 to-blue-400 drop-shadow-md">U</span>
+                </div>
+
+                <!-- Online Badge -->
+                <div class="absolute bottom-2 right-2 bg-emerald-500 w-6 h-6 rounded-full border-4 border-slate-900 z-20 shadow-[0_0_15px_rgba(16,185,129,0.6)]"></div>
+            </div>
+
+            <h3 id="profile-name" class="text-2xl font-bold text-white mt-4 tracking-wide">Loading...</h3>
+            <p id="profile-email" class="text-indigo-300/80 mb-3 text-sm font-medium">loading@example.com</p>
+
+            <!-- Active Status Label -->
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-widest mb-8">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div> Active Now
+            </span>
+        </div>
+
+        <!-- Membership & Details Card -->
+        <div class="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-1 overflow-hidden shadow-2xl border border-slate-700/50 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+            <div class="bg-slate-900/60 rounded-xl p-5 border border-white/5">
+
+                <!-- Membership Row -->
+                <div class="flex items-center justify-between border-b border-slate-700/50 pb-4 mb-4 group cursor-default">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-full bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20 text-yellow-500 group-hover:scale-110 group-hover:bg-yellow-500/20 transition-all shadow-inner">
+                            <i class="fas fa-crown text-lg"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-gray-200 text-sm font-bold tracking-wide">Membership Plan</span>
+                            <span class="text-[10px] text-gray-500">Current subscription level</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-gradient-to-r from-indigo-600 to-blue-600 px-3 py-1.5 rounded-lg text-white shadow-[0_4px_10px_rgba(79,70,229,0.4)] border border-indigo-400/30 tracking-widest uppercase">FREE</span>
+                </div>
+
+                <!-- Account Security Row -->
+                <div class="flex items-center justify-between group cursor-default">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all shadow-inner">
+                            <i class="fas fa-shield-alt text-lg"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-gray-200 text-sm font-bold tracking-wide">Account Security</span>
+                            <span class="text-[10px] text-gray-500">Protected & Encrypted</span>
+                        </div>
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/30">
+                        <i class="fas fa-check text-xs"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Community links (moved here from the notifications page) -->
+        <div class="mb-6 relative z-10">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="fas fa-users text-sm" style="color:var(--nf,#e50914)"></i>
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-widest">Community</h3>
+            </div>
+            <div id="social-links-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </div>
+
+        <!-- Premium Logout Button -->
+        <div class="animate-slide-up" style="animation-delay: 0.3s;">
+            <button onclick="handleLogout()" class="w-full relative group overflow-hidden px-6 py-4 bg-slate-800/60 backdrop-blur-md hover:bg-rose-600/10 text-rose-500 border border-slate-700/50 hover:border-rose-500/50 rounded-2xl transition-all duration-300 shadow-lg flex items-center justify-center gap-3 font-bold text-sm tracking-widest uppercase">
+                <!-- Shine Effect -->
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-rose-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+
+                <i class="fas fa-sign-out-alt text-lg group-hover:-translate-x-1 transition-transform"></i> Sign Out
+            </button>
+        </div>
+    </div>
+</div>

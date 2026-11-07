@@ -1,0 +1,8 @@
+:root { --accent: #e50914; --accent2: #b20710; }
+/* Netflix-like quick theme overrides (keeps existing Tailwind classes) */
+.text-blue-500{ color: var(--accent) !important; }
+.text-blue-400{ color: #ff4d4d !important; }
+.bg-blue-600{ background-color: var(--accent) !important; }
+.hover\:bg-blue-700:hover{ background-color: var(--accent2) !important; }
+.border-blue-500\/30{ border-color: rgba(229,9,20,.3) !important; }
+.ring-blue-600, .focus\:border-blue-500:focus{ border-color: var(--accent) !important; }

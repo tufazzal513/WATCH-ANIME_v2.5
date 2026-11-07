@@ -1,0 +1,27 @@
+/* ===== ADMIN: professional dark dashboard (black/red, responsive) ===== */
+:root{--bg:#0f0f0f;--surface:#181818;--surface2:#242424;--line:rgba(255,255,255,.08);--nf:var(--accent,#e50914)}
+body{background:var(--bg)!important;font-family:'Roboto','Helvetica Neue',Arial,sans-serif!important}
+.bg-gray-900{background-color:var(--bg)!important}
+.bg-gray-800{background-color:var(--surface)!important}
+.bg-gray-700{background-color:var(--surface2)!important}
+.border-gray-700,.border-gray-600{border-color:var(--line)!important}
+.admin-sidebar{background:#000!important;border-right:1px solid var(--line)!important}
+.sidebar-link{margin:2px 10px;border-radius:6px;border-left:0!important;padding:12px 14px!important;color:#b3b3b3}
+.sidebar-link:hover{background:var(--surface2)!important;color:#fff!important}
+.sidebar-link.active{background:var(--nf)!important;color:#fff!important}
+.rounded-lg,.rounded-xl{border-radius:8px}
+.bg-gray-800.rounded-lg,.bg-gray-800.rounded-xl{border:1px solid var(--line);box-shadow:none}
+input,select,textarea{border-radius:4px!important;background:#2a2a2a!important;border-color:#3a3a3a!important}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#fff!important}
+button.bg-blue-600,button.bg-indigo-600{background:var(--nf)!important;border-radius:4px;font-weight:700}
+table{width:100%}
+@media(max-width:767px){.overflow-x-auto,main table{overflow-x:auto}}
+
+/* classification picker */
+.mx-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #3a3a3a;background:#242424;color:#ddd;border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
+.mx-chip.on{background:var(--nf,#e50914);border-color:var(--nf,#e50914);color:#fff}
+.mx-chip button{background:none;color:inherit;font-size:14px;line-height:1;padding:0}
+.mx-glist{max-height:190px;overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 10px;border:1px solid #2f2f2f;border-radius:10px;padding:8px;background:#141414}
+@media(min-width:640px){.mx-glist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mx-row{display:flex;align-items:center;gap:8px;padding:6px 4px;font-size:13px;color:#ddd;cursor:pointer;border-radius:6px}
+.mx-row:hover{background:#222}

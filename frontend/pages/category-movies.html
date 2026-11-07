@@ -1,0 +1,28 @@
+<div id="category-movies-page" class="page">
+    <div class="br-head">
+        <button onclick="goBack()" class="br-back" aria-label="Back"><i class="fas fa-arrow-left"></i></button>
+        <h2 id="selected-category-title">Browse</h2>
+        <button class="br-filter" onclick="openBrowseFilters()" aria-label="Filters"><i class="fas fa-sliders-h"></i></button>
+    </div>
+    <div class="br-bar">
+        <div class="br-tabs no-scrollbar" id="br-tabs">
+            <button data-b="all" class="on" onclick="setBrowseTab('all')">All</button>
+            <button data-b="movies" onclick="setBrowseTab('movies')">Movies</button>
+            <button data-b="series" onclick="setBrowseTab('series')">Series</button>
+            <button data-b="anime" onclick="setBrowseTab('anime')">Anime</button>
+        </div>
+        <select id="br-sort" onchange="setBrowseSort(this.value)">
+            <option value="suggested">Suggested</option><option value="new">Newest</option><option value="top">Top Rated</option><option value="az">A-Z</option>
+        </select>
+    </div>
+    <div id="br-rows"></div>
+    <h3 id="br-all-title" class="br-h3 hidden">All Titles</h3>
+    <div id="category-movies-grid" class="mx-grid"></div>
+    <div id="br-sheet" class="mx-sheet hidden" onclick="if(event.target===this)closeBrowseFilters()">
+        <div class="mx-sheet-box">
+            <div class="mx-sheet-top"><b>Filters</b><button onclick="closeBrowseFilters()" aria-label="Close"><i class="fas fa-times"></i></button></div>
+            <div id="br-fields"></div>
+            <div class="mx-sheet-btns"><button class="ghost" onclick="resetBrowseFilters()">Reset</button><button onclick="applyBrowseFilters()">Apply</button></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div id="search-page" class="page">
+    <div class="sr-bar">
+        <button class="sr-back" onclick="goBack()" aria-label="Back"><i class="fas fa-arrow-left"></i></button>
+        <div class="sr-box">
+            <i class="fas fa-search sr-ico"></i>
+            <input type="search" id="search-input" placeholder="Search movies, series, anime..." autocomplete="off" enterkeyhint="search">
+            <button id="search-clear-btn" class="sr-x hidden" aria-label="Clear"><i class="fas fa-times-circle"></i></button>
+            <button id="search-go-btn" class="sr-go hidden">Search</button>
+        </div>
+        <button id="search-mic-btn" class="sr-mic hidden" aria-label="Voice search"><i class="fas fa-microphone"></i></button>
+    </div>
+    <div id="search-suggestions" class="sr-sug hidden"></div>
+
+    <div id="search-home">
+        <div id="search-history-container" class="sr-sec hidden">
+            <div class="sr-sech"><h3>Recent</h3><button onclick="clearSearchHistory()"><i class="far fa-trash-alt"></i> Clear</button></div>
+            <div id="search-history-chips" class="sr-chips"></div>
+            <button id="sr-more" class="sr-more hidden" onclick="toggleRecent()"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div id="search-popular" class="sr-sec hidden">
+            <div class="sr-sech"><h3><i class="fas fa-fire" style="color:#ff7a18"></i> Everyone is searching</h3></div>
+            <div id="search-popular-chips" class="sr-chips"></div>
+        </div>
+        <div class="sr-sec">
+            <div class="sr-hot-tabs no-scrollbar" id="hot-tabs">
+                <button data-h="movies" class="on" onclick="setHotTab('movies')">Hot Movies</button>
+                <button data-h="series" onclick="setHotTab('series')">Hot Series</button>
+                <button data-h="anime" onclick="setHotTab('anime')">Hot Anime</button>
+            </div>
+            <div id="top-searches" class="sr-hot"></div>
+        </div>
+    </div>
+
+    <div id="search-view" class="hidden">
+        <div class="sr-tabs no-scrollbar" id="sr-tabs"></div>
+        <div id="search-results" class="sr-list"></div>
+        <div id="sr-related" class="hidden"></div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div id="mylist-page" class="page p-4 pt-20">
+    <div class="ml-top"><h2 class="nf-pt">My List</h2>
+        <select id="ml-sort" onchange="renderMyListPage()"><option value="added">Recently added</option><option value="az">A-Z</option><option value="top">Rating</option></select>
+    </div>
+    <p id="ml-count" class="ml-count"></p>
+    <div id="mylist-grid" class="ml-list"></div>
+    <div id="mylist-empty" class="nf-empty hidden"><i class="fas fa-plus-square" style="font-size:42px;display:block;margin-bottom:10px"></i>Titles you add to My List will appear here.<br><button class="ml-browse" onclick="showPage('categories-page')">Browse titles</button></div>
+</div>

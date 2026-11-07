@@ -1,0 +1,120 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "settings": {
+      ".read": true,
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "movies": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "banners": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "categories": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "socialLinks": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "notifications": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()"
+    },
+    "users": {
+      ".read": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "root.child('settings/adminUIDs/'+auth.uid).exists() || (auth != null && auth.uid === $uid && (newData.exists() || data.child('status').val() === 'deleted'))",
+        "status": {
+          ".validate": "newData.val() === data.val() || root.child('settings/adminUIDs/'+auth.uid).exists() || (!data.exists() && newData.val() === 'active')"
+        },
+        "myList": {
+          "$movieId": {
+            ".validate": "newData.isNumber() || newData.val() === true"
+          }
+        },
+        "progress": {
+          "$movieId": {
+            ".validate": "newData.hasChildren(['t','d'])"
+          }
+        }
+      }
+    },
+    "online_users": {
+      ".read": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      "$uid": {
+        ".write": "root.child('settings/adminUIDs/'+auth.uid).exists() || (auth != null && auth.uid === $uid)"
+      }
+    },
+    "broken_links": {
+      ".read": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      "$movieId": {
+        ".write": "root.child('settings/adminUIDs/'+auth.uid).exists() || (auth != null && newData.exists())"
+      }
+    },
+    "analytics": {
+      "errors": {
+        ".read": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+        "$id": {
+          ".write": "auth != null && !data.exists()"
+        }
+      }
+    },
+    "pwd_resets": {
+      ".read": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      "$emailKey": {
+        ".read": true,
+        ".write": true,
+        "$k": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    "stats": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      "$id": {
+        "plays": {
+          ".write": "auth != null",
+          ".validate": "newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+        },
+        "lists": {
+          ".write": "auth != null",
+          ".validate": "newData.isNumber() && newData.val() >= 0 && (newData.val() === (data.exists() ? data.val() : 0) + 1 || newData.val() === (data.exists() ? data.val() : 0) - 1)"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "searchStats": {
+      ".read": "auth != null",
+      ".write": "root.child('settings/adminUIDs/'+auth.uid).exists()",
+      ".indexOn": [
+        "c"
+      ],
+      "$key": {
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['t','c','at'])",
+        "t": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 40"
+        },
+        "c": {
+          ".validate": "newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+        },
+        "at": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

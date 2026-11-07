@@ -1,0 +1,14 @@
+<div id="home-page" class="page active relative min-h-screen overflow-hidden">
+    <div class="hero"><div class="hero-track" id="carousel"><div class="skeleton w-full h-full" style="border-radius:0"></div></div>
+        <div class="nf-chips" id="home-chips">
+            <button data-t="home" class="on" onclick="setHomeTab('home')">Home</button>
+            <button data-t="movies" onclick="setHomeTab('movies')">Movies</button>
+            <button data-t="series" onclick="setHomeTab('series')">Series</button>
+            <button data-t="anime" onclick="setHomeTab('anime')">Anime</button>
+            <button class="hm-explore" onclick="showPage('categories-page')"><i class="fas fa-compass"></i> Explore</button>
+        </div>
+    </div>
+    <div id="movie-carousels-container" class="relative z-10 pb-10 px-4">
+        <div class="mb-8 skeleton-group"><div class="skeleton sk-title"></div><div class="sk-row"><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div></div></div>
+    </div>
+</div>

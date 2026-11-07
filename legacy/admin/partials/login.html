@@ -1,0 +1,19 @@
+<!-- Login Screen -->
+<div id="login-screen" class="min-h-screen flex items-center justify-center p-4 z-[100] relative bg-gray-900" style="display: none;">
+    <div class="w-full max-w-md bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
+        <h1 class="text-3xl font-bold text-center mb-2 logo-anim admin-app-name">Move<span class="text-blue-500">X</span></h1>
+        <p class="text-center text-gray-400 mb-6 text-sm uppercase tracking-wide">Secure Admin Access</p>
+        <form id="admin-login-form">
+            <div class="mb-4">
+                <label class="block text-gray-400 text-sm mb-2">Email</label>
+                <input type="email" id="admin-email" class="w-full bg-gray-700 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-600 border border-gray-600" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-400 text-sm mb-2">Password</label>
+                <input type="password" id="admin-password" class="w-full bg-gray-700 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-600 border border-gray-600" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 rounded-lg p-3 font-semibold transition-colors shadow-lg shadow-blue-600/30">Login</button>
+            <p id="admin-auth-error" class="text-red-500 mt-4 text-center text-sm font-medium"></p>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div id="notifications-page" class="page p-4 relative overflow-hidden">
+    <!-- Custom CSS Animation specific to this page -->
+    <style>
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0; /* Hidden before animation starts */
+        }
+    </style>
+
+    <div class="flex items-center gap-3 mb-6 relative z-10">
+        <div class="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shadow-lg">
+            <i class="fas fa-bell text-blue-400 text-lg"></i>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 tracking-wide">Notice Board</h2>
+    </div>
+
+    <!-- Announcements Section -->
+    <div class="relative z-10">
+        <div class="flex items-center gap-2 mb-4">
+            <i class="fas fa-bullhorn text-blue-400 text-sm"></i>
+            <h3 class="text-xs font-bold text-gray-300 uppercase tracking-widest">Announcements</h3>
+        </div>
+
+        <!-- Ad Location (Untouched) -->
+
+        <div id="notifications-container" class="space-y-4 pb-4"></div>
+    </div>
+
+    <!-- Premium Background Glow Elements -->
+    <div class="absolute top-[5%] left-[-10%] w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+    <div class="absolute bottom-[20%] right-[-10%] w-64 h-64 bg-purple-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+</div>

@@ -1,0 +1,45 @@
+{{define "content"}}
+<div class="fade-in space-y-5">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div><h2 class="text-2xl font-bold text-white"><i class="fas fa-list text-blue-400 mr-2"></i>All Movies &amp; Series</h2><p class="mt-1 text-sm text-gray-400">Search, filter, sort and manage your complete catalog.</p></div>
+    <a href="/admin/movies/new" class="rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white hover:bg-blue-500">+ Add Content</a>
+  </div>
+  <form method="get" action="/admin/movies" class="rounded-xl border border-gray-700 bg-gray-800 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <input name="q" value="{{.Data.Query}}" placeholder="Search title, cast, genre..." class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white">
+    <select name="type" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="all">All content types</option><option value="movie" {{if eq .Data.ContentType "movie"}}selected{{end}}>Movies</option><option value="series" {{if eq .Data.ContentType "series"}}selected{{end}}>Series</option></select>
+    <select name="status" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="all">All visibility</option><option value="public" {{if eq .Data.Status "public"}}selected{{end}}>Public</option><option value="private" {{if eq .Data.Status "private"}}selected{{end}}>Private</option></select>
+    <select name="upcoming" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="all">All release states</option><option value="yes" {{if eq .Data.Upcoming "yes"}}selected{{end}}>Upcoming</option><option value="no" {{if eq .Data.Upcoming "no"}}selected{{end}}>Released / normal</option></select>
+    <select name="genre" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="">All genres</option>{{range .Data.Categories}}<option value="{{.Name}}" {{if eq $.Data.Genre .Name}}selected{{end}}>{{.Name}}</option>{{end}}</select>
+    <select name="industry" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="">All industries</option>{{range .Data.Industries}}<option value="{{.}}" {{if eq $.Data.Industry .}}selected{{end}}>{{.}}</option>{{end}}</select>
+    <select name="language" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="">All languages</option>{{range .Data.Languages}}<option value="{{.}}" {{if eq $.Data.Language .}}selected{{end}}>{{.}}</option>{{end}}</select>
+    <select name="year" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="">All years</option>{{range .Data.Years}}<option value="{{.}}" {{if eq $.Data.Year (printf "%d" .)}}selected{{end}}>{{.}}</option>{{end}}</select>
+    <select name="sort" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white"><option value="new" {{if eq .Data.Sort "new"}}selected{{end}}>Newest first</option><option value="old" {{if eq .Data.Sort "old"}}selected{{end}}>Oldest first</option><option value="title" {{if eq .Data.Sort "title"}}selected{{end}}>Title A-Z</option><option value="year" {{if eq .Data.Sort "year"}}selected{{end}}>Release year</option><option value="rating" {{if eq .Data.Sort "rating"}}selected{{end}}>Rating</option><option value="hot" {{if eq .Data.Sort "hot"}}selected{{end}}>Popular</option></select>
+    <div class="sm:col-span-2 lg:col-span-4 flex flex-wrap gap-2"><button class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white">Apply filters</button><a href="/admin/movies" class="rounded-lg border border-gray-600 px-5 py-2.5 text-sm text-gray-300">Reset</a><span class="ml-auto self-center text-sm text-gray-400">{{.Data.Total}} result(s)</span></div>
+  </form>
+  <form method="post" action="/admin/movies/bulk" data-confirm="Permanently delete all selected content and its episodes and links?">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <div class="flex flex-wrap items-center gap-3 rounded-t-xl border border-gray-700 bg-gray-800 p-3">
+      <label class="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" data-select-all> Select page</label>
+      <select name="action" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-white"><option value="delete">Delete selected</option></select>
+      <button class="rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white">Run bulk action</button>
+    </div>
+    <div class="overflow-x-auto rounded-b-xl border border-t-0 border-gray-700 bg-gray-800">
+      <table class="w-full min-w-[760px] text-left text-sm">
+        <thead class="bg-gray-700/60 text-xs uppercase text-gray-300"><tr><th class="p-3">Select</th><th class="p-3">Content</th><th class="p-3">Type</th><th class="p-3">Visibility</th><th class="p-3">Genres</th><th class="p-3">Year / Rating</th><th class="p-3 text-right">Actions</th></tr></thead>
+        <tbody class="divide-y divide-gray-700">
+        {{range .Data.Movies}}<tr>
+          <td class="p-3"><input type="checkbox" name="ids" value="{{.ID}}" data-row-select aria-label="Select {{.Title}}"></td>
+          <td class="p-3"><div class="flex items-center gap-3"><img src="{{.PosterURL}}" alt="" loading="lazy" class="h-14 w-10 rounded object-cover bg-gray-900"><div><div class="font-semibold text-white">{{.Title}}</div><div class="text-xs text-gray-500">{{.ContentType}}</div></div></div></td>
+          <td class="p-3 text-gray-300">{{.Type}}</td>
+          <td class="p-3">{{if .IsPrivate}}<span class="rounded bg-amber-500/15 px-2 py-1 text-xs text-amber-300">Private</span>{{else}}<span class="rounded bg-emerald-500/15 px-2 py-1 text-xs text-emerald-300">Public</span>{{end}}{{if .IsUpcoming}}<span class="ml-1 rounded bg-blue-500/15 px-2 py-1 text-xs text-blue-300">Upcoming</span>{{end}}</td>
+          <td class="p-3 text-xs text-gray-400">{{range $i,$g := .Genres}}{{if $i}}, {{end}}{{$g}}{{end}}</td>
+          <td class="p-3 text-gray-300">{{if .Year}}{{.Year}}{{else}}-{{end}} / {{if .Rating}}{{.Rating}}{{else}}-{{end}}</td>
+          <td class="p-3 text-right"><a href="/admin/movies/{{.ID}}/edit" class="font-semibold text-blue-300 hover:text-blue-200">Edit</a></td>
+        </tr>{{else}}<tr><td colspan="7" class="p-8 text-center text-gray-500">No content matches these filters.</td></tr>{{end}}
+        </tbody>
+      </table>
+    </div>
+  </form>
+  <div class="flex items-center justify-between text-sm text-gray-400"><span>Page {{.Data.Page}} of {{.Data.Pages}}</span><div class="flex gap-2">{{if gt .Data.Page 1}}<a class="rounded-lg border border-gray-600 px-4 py-2 text-white" href="/admin/movies?q={{.Data.Query}}&type={{.Data.ContentType}}&status={{.Data.Status}}&upcoming={{.Data.Upcoming}}&genre={{.Data.Genre}}&industry={{.Data.Industry}}&language={{.Data.Language}}&year={{.Data.Year}}&sort={{.Data.Sort}}&page={{add .Data.Page -1}}">Previous</a>{{end}}{{if lt .Data.Page .Data.Pages}}<a class="rounded-lg border border-gray-600 px-4 py-2 text-white" href="/admin/movies?q={{.Data.Query}}&type={{.Data.ContentType}}&status={{.Data.Status}}&upcoming={{.Data.Upcoming}}&genre={{.Data.Genre}}&industry={{.Data.Industry}}&language={{.Data.Language}}&year={{.Data.Year}}&sort={{.Data.Sort}}&page={{add .Data.Page 1}}">Next</a>{{end}}</div></div>
+</div>
+{{end}}

@@ -1,0 +1,21 @@
+{{define "content"}}
+<div class="fade-in space-y-5">
+  <div><h2 class="text-2xl font-bold text-white"><i class="fas fa-tags text-blue-400 mr-2"></i>Categories</h2><p class="mt-1 text-sm text-gray-400">Manage genres used by the content catalog.</p></div>
+  <form method="post" action="/admin/categories" class="grid grid-cols-1 gap-3 rounded-xl border border-gray-700 bg-gray-800 p-4 sm:grid-cols-4">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <input name="name" required maxlength="60" placeholder="New category name" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white sm:col-span-2">
+    <input name="sort" type="number" placeholder="Sort (0 = last)" class="rounded-lg border border-gray-600 bg-gray-900 px-3 py-3 text-sm text-white">
+    <label class="flex items-center gap-2 text-sm text-gray-300"><input type="checkbox" name="popular"> Popular</label>
+    <button class="rounded-lg bg-blue-600 px-4 py-3 text-sm font-bold text-white sm:col-span-4">Add category</button>
+  </form>
+  <form method="post" action="/admin/categories/reorder" class="rounded-xl border border-gray-700 bg-gray-800 p-4 space-y-3">
+    <input type="hidden" name="csrf" value="{{.CSRF}}">
+    <div class="flex items-center justify-between"><h3 class="font-semibold text-white">Display order</h3><span class="text-xs text-gray-400">Enter IDs in preferred order, comma separated</span></div>
+    <textarea name="order" rows="2" class="w-full rounded-lg border border-gray-600 bg-gray-900 p-3 font-mono text-xs text-white">{{range $i,$v := .Data}}{{if $i}},{{end}}{{$v.ID}}{{end}}</textarea>
+    <button class="rounded-lg border border-gray-600 px-4 py-2 text-sm text-white">Save order</button>
+  </form>
+  <div class="overflow-x-auto rounded-xl border border-gray-700 bg-gray-800"><table class="w-full min-w-[650px] text-left text-sm"><thead class="bg-gray-700/60 text-xs uppercase text-gray-300"><tr><th class="p-3">Category</th><th class="p-3">ID</th><th class="p-3">Titles</th><th class="p-3">Popular</th><th class="p-3">Sort</th><th class="p-3">Actions</th></tr></thead><tbody class="divide-y divide-gray-700">
+  {{range .Data}}<tr><td class="p-3"><form id="cat-{{.ID}}" method="post" action="/admin/categories/{{.ID}}" class="flex gap-2"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input name="name" value="{{.Name}}" maxlength="60" required class="w-full min-w-28 rounded border border-gray-600 bg-gray-900 px-2 py-2 text-white"></form></td><td class="p-3 font-mono text-xs text-gray-400">{{.ID}}</td><td class="p-3 text-gray-300">{{.MovieCount}}</td><td class="p-3"><label class="text-gray-300"><input form="cat-{{.ID}}" type="checkbox" name="popular" {{if .Popular}}checked{{end}}> Yes</label></td><td class="p-3"><input form="cat-{{.ID}}" type="number" name="sort" value="{{.Sort}}" class="w-20 rounded border border-gray-600 bg-gray-900 px-2 py-2 text-white"></td><td class="p-3"><div class="flex gap-3"><button form="cat-{{.ID}}" class="font-semibold text-blue-300">Save</button><form method="post" action="/admin/categories/{{.ID}}/delete" data-confirm="Delete this category? Movie genre assignments will be removed."><input type="hidden" name="csrf" value="{{$.CSRF}}"><button class="font-semibold text-red-300">Delete</button></form></div></td></tr>{{else}}<tr><td colspan="6" class="p-8 text-center text-gray-500">No categories yet.</td></tr>{{end}}
+  </tbody></table></div>
+</div>
+{{end}}

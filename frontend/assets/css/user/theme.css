@@ -1,0 +1,23 @@
+/* Initial theme is safely injected by zero-delay script above */
+
+/* Smooth color transition for entire app */
+* { transition: color 0.5s ease, background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease; }
+
+/* Dynamic Classes Replacement */
+.theme-text-color { color: var(--accent) !important; transition: color 0.5s ease; }
+.text-blue-500, .text-indigo-400, .text-blue-400, .text-cyan-400 { color: var(--accent) !important; }
+.bg-blue-600, .bg-indigo-600 { background-color: var(--accent) !important; }
+.hover\:bg-blue-700:hover { background-color: var(--accent2) !important; }
+.border-blue-500, .border-indigo-500 { border-color: var(--accent) !important; }
+.focus\:border-blue-500:focus, .focus\:border-indigo-500:focus { border-color: var(--accent) !important; }
+
+/* Gradients */
+.from-blue-600, .from-indigo-600 { --tw-gradient-from: var(--accent) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+.to-blue-500, .to-indigo-500 { --tw-gradient-to: var(--accent2) !important; }
+
+/* Glows & Shadows */
+.shadow-blue-600\/30 { box-shadow: 0 4px 14px 0 rgba(0,0,0,0.3) !important; }
+
+/* specific components */
+.play-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important; }
+.category-grid-item { background-image: linear-gradient(to top right, var(--accent2), var(--accent)) !important; }

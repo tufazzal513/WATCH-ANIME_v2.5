@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveX - Admin Panel</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Admin styles -->
+    <link rel="stylesheet" href="../assets/css/admin/base.css">
+    <link rel="stylesheet" href="../assets/css/admin/logo.css">
+    <link rel="stylesheet" href="../assets/css/admin/search.css">
+    <link rel="stylesheet" href="../assets/css/admin/picker.css">
+    <link rel="stylesheet" href="../assets/css/admin/filters.css">
+    <link rel="stylesheet" href="../assets/css/admin/users.css">
+    <link rel="stylesheet" href="../assets/css/admin/sidebar.css">
+    <!-- Chart.js (Dashboard Graphs) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Theme overrides (must load last) -->
+    <link rel="stylesheet" href="../assets/css/admin/theme.css">
+    <link rel="stylesheet" href="../assets/css/admin/pro.css">
+</head>
+<body class="bg-gray-900 text-gray-200 font-sans">
+
+    <!-- Global Loader for Auth Check -->
+    <div id="global-loader" class="fixed inset-0 z-[200] flex items-center justify-center bg-gray-900 transition-opacity duration-300">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+    </div>
+
+    <div data-include="partials/login.html"></div>
+
+    <!-- Admin Panel Interface -->
+    <div id="admin-panel" class="hidden flex flex-col min-h-screen">
+        
+        <div data-include="partials/sidebar.html"></div>
+        <div data-include="partials/header.html"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 pb-24 overflow-y-auto w-full max-w-5xl mx-auto">
+            
+            <!-- Dashboard Page -->
+            <div data-include="pages/dashboard.html"></div>
+
+            <!-- Premium Upload Movie Page -->
+            <div data-include="pages/movies.html"></div>
+
+            <!-- All Movies Page (unchanged) -->
+            <div data-include="pages/all-movies.html"></div>
+
+            <!-- Broken Links Page -->
+            <div data-include="pages/broken-links.html"></div>
+            
+            <!-- Premium Banners Page -->
+            <div data-include="pages/banners.html"></div>
+
+            <!-- ========== PREMIUM USER MANAGEMENT PAGE ========== -->
+            <div data-include="pages/users.html"></div>
+
+            <!-- Settings Page (unchanged) -->
+            <div data-include="pages/settings.html"></div>
+
+        </main>
+
+        <div data-include="partials/bottom-nav.html"></div>
+
+    </div>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- Loads partials/pages, then the app scripts in order -->
+    <script src="../assets/js/admin/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="csrf-token" content="{{.CSRF}}">
+    <meta name="htmx-config" content='{"allowEval":false,"allowScriptTags":false,"includeIndicatorStyles":false,"historyCacheSize":0,"refreshOnHistoryMiss":true}'>
+    <title>{{.Title}} · {{.AppName}} Admin</title>
+    <link rel="stylesheet" href="{{static "css/tailwind.css"}}">
+    <link rel="stylesheet" href="{{static "css/fa.css"}}">
+    <link rel="stylesheet" href="{{static "css/fonts.css"}}">
+    <link rel="stylesheet" href="{{static "css/admin-theme.css"}}">
+</head>
+<body class="bg-gray-900 text-gray-200 font-sans">
+    <div id="admin-panel" class="flex flex-col min-h-screen">
+        {{template "sidebar" .}}
+        {{template "header" .}}
+        <main class="flex-1 p-4 pb-24 overflow-y-auto w-full max-w-5xl mx-auto">
+            {{with .Flash}}
+            <div class="fade-in mb-4 rounded-lg px-4 py-3 text-sm {{if eq .Kind "error"}}bg-red-500/10 text-red-400 border border-red-500/30{{else}}bg-emerald-500/10 text-emerald-400 border border-emerald-500/30{{end}}" role="status" data-flash>{{.Text}}</div>
+            {{end}}
+            {{template "content" .}}
+        </main>
+        {{template "bottomnav" .}}
+    </div>
+    <script src="{{static "js/htmx.min.js"}}"></script>
+    <script src="{{static "js/admin.js"}}"></script>
+</body>
+</html>

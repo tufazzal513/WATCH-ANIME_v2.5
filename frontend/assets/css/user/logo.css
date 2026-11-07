@@ -1,0 +1,26 @@
+/* Animation for Logo */
+@keyframes slideInLogo {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.logo-anim { 
+    animation: slideInLogo 0.8s ease-out forwards; 
+}
+
+/* Premium Shining App Name for Global Header & Auth Screen */
+#global-header .dynamic-app-name,
+.auth-card .dynamic-app-name {
+    background: linear-gradient(to right, #ffffff, var(--accent), var(--accent2), #ffffff);
+    background-size: 300% auto;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: textShine 4s linear infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Force child span to inherit the transparent fill for smooth gradient */
+#global-header .dynamic-app-name span,
+.auth-card .dynamic-app-name span {
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}

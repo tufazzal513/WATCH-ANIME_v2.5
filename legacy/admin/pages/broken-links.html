@@ -1,0 +1,40 @@
+<div id="broken-links" class="admin-page fade-in">
+    <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center border border-red-500/30 shadow-lg">
+            <i class="fas fa-link-slash text-red-400 text-lg"></i>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 tracking-wide">Broken Links Reports</h2>
+    </div>
+
+    <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 mb-4 shadow-lg flex flex-wrap gap-4 items-center">
+        <div class="relative flex-1 min-w-[200px]">
+            <input type="text" id="broken-search-input" placeholder="Search by title..." class="w-full bg-gray-900 text-white pl-10 pr-4 py-2.5 rounded-lg border border-gray-600 focus:border-red-500 outline-none shadow-inner text-sm">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+        </div>
+        <div class="filter-group">
+            <span class="filter-label"><i class="fas fa-filter text-red-400 mr-1"></i>Type</span>
+            <select id="broken-type-filter" class="bg-transparent text-gray-200 text-xs font-bold outline-none cursor-pointer" onchange="renderBrokenLinksTable()">
+                <option value="all" class="bg-gray-800">All Content</option>
+                <option value="movie" class="bg-gray-800">Movies</option>
+                <option value="series" class="bg-gray-800">Series</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden shadow-lg">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-700/50 text-gray-300 text-xs uppercase">
+                    <tr>
+                        <th class="p-4 whitespace-nowrap">Poster</th>
+                        <th class="p-4 whitespace-nowrap">Content Info</th>
+                        <th class="p-4 whitespace-nowrap">Broken Episode</th>
+                        <th class="p-4 whitespace-nowrap">Server Type</th>
+                        <th class="p-4 whitespace-nowrap text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="broken-links-table" class="text-sm divide-y divide-gray-700"></tbody>
+            </table>
+        </div>
+    </div>
+</div>

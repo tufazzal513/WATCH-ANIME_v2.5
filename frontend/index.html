@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveX - Anime, Series &amp; Movies</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Player APIs -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script src="assets/js/user/core/theme-boot.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/user/liquid-bg.css">
+    <link rel="stylesheet" href="assets/css/user/base.css">
+    <link rel="stylesheet" href="assets/css/user/logo.css">
+    <link rel="stylesheet" href="assets/css/user/carousel.css">
+    <link rel="stylesheet" href="assets/css/user/splash-auth.css">
+    <link rel="stylesheet" href="assets/css/user/general.css">
+    <link rel="stylesheet" href="assets/css/user/movie-details.css">
+    <link rel="stylesheet" href="assets/css/user/search.css">
+    <link rel="stylesheet" href="assets/css/user/notifications.css">
+    <!-- Dynamic Theme Overrides (must load last) -->
+    <link rel="stylesheet" id="dynamic-theme-style" href="assets/css/user/theme.css">
+    <link rel="stylesheet" href="assets/css/user/pro.css">
+    <link rel="stylesheet" href="assets/css/user/movie-page.css">
+    <link rel="stylesheet" href="assets/css/user/explore.css">
+</head>
+<body class="bg-slate-900 text-white font-sans">
+    <div data-include="partials/custom-modal.html"></div>
+    <!-- INITIAL LOADER -->
+    <div id="initial-loader" class="splash-screen">
+        <!-- Dynamic Liquid Glass Background Effect -->
+        <div class="splash-glass-blob blob-1"></div>
+        <div class="splash-glass-blob blob-2"></div>
+        <div class="splash-glass-overlay"></div>
+        
+        <div class="splash-content relative z-10">
+            <div class="splash-logo-container" id="splash-logo-box">
+                <span id="splash-logo-text"></span>
+                <img id="splash-logo-img" src="" alt="Logo">
+            </div>
+            <h1 class="splash-title" id="splash-title-text"></h1>
+            <p class="splash-subtitle">Anime, Series & Movies</p>
+            
+            <div class="splash-loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div class="splash-footer">
+            <p>POWERED BY</p>
+            <h4 id="splash-footer-text"></h4>
+        </div>
+    </div>
+
+    <!-- ZERO DELAY DOM SCRIPT: Executes instantly -->
+    <script src="assets/js/user/core/splash-boot.js"></script>
+
+    <div data-include="partials/auth.html"></div>
+    <!-- MAIN APP CONTAINER -->
+    <div id="app-container" class="max-w-4xl mx-auto hidden relative">
+        
+        <!-- Global Liquid Glass Background -->
+        <div class="global-liquid-bg">
+            <div class="global-blob g-blob-1"></div>
+            <div class="global-blob g-blob-2"></div>
+            <div class="global-blob g-blob-3"></div>
+            <div class="global-glass-overlay"></div>
+        </div>
+
+        <div data-include="partials/header.html"></div>
+
+        <main class="main-content">
+            
+            <!-- Home Page -->
+            <div data-include="pages/home.html"></div>
+
+            <!-- Search Page -->
+            <div data-include="pages/search.html"></div>
+
+            <!-- Premium Categories Page -->
+            <div data-include="pages/categories.html"></div>
+
+            <!-- Premium Notification Page -->
+            <div data-include="pages/notifications.html"></div>
+            
+            <!-- Premium Category Movies Result Page -->
+            <div data-include="pages/category-movies.html"></div>
+
+            <!-- Profile Page Premium UI -->
+            <div data-include="pages/profile.html"></div>
+
+            <!-- Movie Details Page -->
+            <div data-include="pages/movie-details.html"></div>
+            <div data-include="pages/my-list.html"></div>
+
+            <!-- Watch Page Premium UI -->
+
+        </main>
+
+        <div data-include="partials/bottom-nav.html"></div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+
+    <!-- Loads partials/pages, then the app scripts in order -->
+    <script src="assets/js/user/bootstrap.js"></script>
+</body>
+</html>
