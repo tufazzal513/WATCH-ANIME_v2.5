@@ -1,12 +1,18 @@
 name: Deploy MoveX frontend to GitHub Pages
 
+# NOTE: Pages is currently configured as "Deploy from a branch: main / (root)".
+# The site root is served by /index.html, which redirects into frontend/.
+# actions/deploy-pages requires Settings -> Pages -> Source: GitHub Actions,
+# so this workflow is manual-only until the Pages source is switched back.
+# Re-enable the push trigger below at that point.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
+
+# push:
+#   branches: [main]
+#   paths:
+#     - 'frontend/**'
+#     - '.github/workflows/pages.yml'
 
 permissions:
   contents: read

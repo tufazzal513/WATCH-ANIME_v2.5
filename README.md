@@ -48,3 +48,12 @@ Part 25 adds typed movie/episode download-source selection, keeps download URLs 
 - Added replication epoch tracking to worker status so workers with stale snapshots are excluded from public server discovery after a main reset/restore.
 - Added optional debounced main-to-worker notifications using a separate shared `SYNC_NOTIFY_KEY` (32+ characters). Periodic polling remains the fallback.
 - See `docs/FRONTEND_DEPLOYMENT.md` for the main/worker environment setup.
+
+## GitHub Pages (deploy from a branch)
+
+This repository publishes with **Settings → Pages → Build and deployment → Deploy from a branch: `main` / `/ (root)`**. Every application file stays inside `frontend/`:
+
+- Root `index.html` immediately redirects `/` to `frontend/`, so the site root works without moving any app file.
+- Root `.nojekyll` disables Jekyll so `frontend/` HTML/CSS/JS is served verbatim; all app asset paths are relative.
+- `.github/workflows/pages.yml` is kept but is manual-only, because `actions/deploy-pages` requires the Pages source to be **GitHub Actions**. To use it, switch the Pages source back and restore its `push` trigger.
+- To connect the Go API, set `apiBase` in `frontend/assets/js/shared/deploy-config.js` (for example `window.MX_CONFIG = { apiBase: 'https://api.example.com' };`), or use the Actions workflow with the `MOVEX_API_BASE` repository variable. The Go server's `ALLOWED_ORIGINS` must include `https://OWNER.github.io`.
